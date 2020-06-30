@@ -20,8 +20,7 @@ jobs:
 
     - name: Set
       run: |
-
-        echo "::set-env INSTALL_PATH=$HOME/${{ matrix.release }}"
+        echo "::set-env name=INSTALL_PATH::$HOME/${{ matrix.release }}"
         
     - name: Show
       run: |

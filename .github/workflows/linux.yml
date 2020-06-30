@@ -12,16 +12,22 @@ jobs:
         release:
           - 'alpha'
   
-    env:
-      INSTALL_PATH: $HOME/${{ matrix.release }}
+#     env:
+#       INSTALL_PATH: $HOME/${{ matrix.release }}
                
     steps:
     - uses: actions/checkout@v2
 
-    - name: Work
+    - name: Set
+      run: |
+
+        echo "::set-env INSTALL_PATH=$HOME/${{ matrix.release }}"
+        
+    - name: Show
       run: |
         echo INSTALL_PATH $INSTALL_PATH
         echo RELEASE ${{ matrix.release }}
+        echo INSTALL_PATH ${{ env.INSTALL_PATH }}
         
     - name: env
       run: env

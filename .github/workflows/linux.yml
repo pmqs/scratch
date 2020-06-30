@@ -41,11 +41,11 @@ jobs:
     - name: Install 
       if: steps.my-cache.outputs.cache-hit != 'true'
       run: |
-        mkdir -p ${{ env.INSTALL_PATH }}
-        echo abc >${{ env.INSTALL_PATH }}/token
+        mkdir -p $INSTALL_PATH
+        echo abc >$INSTALL_PATH/token
              
     - name: Work
       run: |
-        cat ${{ env.INSTALL_PATH }}/token
+        cat $INSTALL_PATH/token
 
     

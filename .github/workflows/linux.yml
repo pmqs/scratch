@@ -47,15 +47,23 @@ jobs:
         path: ${{ env.INSTALL_PATH }}
         key: ${{ matrix.release }}
      
+#     - name: Install 
+#       if: ${{ ! startsWith(matrix.os, 'windows') && steps.my-cache.outputs.cache-hit != 'true' }}
+#       run: |
+#         mkdir $INSTALL_PATH
+#         echo abc >$INSTALL_PATH/token
+
     - name: Install 
-      if: steps.my-cache.outputs.cache-hit != 'true'
+      if:  steps.my-cache.outputs.cache-hit != 'true' 
       run: |
-        mkdir $INSTALL_PATH
-        echo abc >$INSTALL_PATH/token
-             
+        mkdir ${{ env.INSTALL_PATH }}
+        cd ${{ env.INSTALL_PATH }}
+        echo abc >token
+        
     - name: Work
       run: |
-        cat $INSTALL_PATH/token
+        cd ${{ env.INSTALL_PATH }}
+        cat token
         echo this is ${{ matrix.os }} ${{ matrix.release }}
 
     

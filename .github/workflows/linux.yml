@@ -21,15 +21,15 @@ jobs:
     - name: env
       run: env
       
-#     - name: Check Cache
-#       id: my-cache
-#       uses: actions/cache@v2
-#       with:
-#         path: ${{ env.INSTALL_PATH }}
-#         key: ${{ matrix.release }}
+    - name: Check Cache
+      id: my-cache
+      uses: actions/cache@v2
+      with:
+        path: ${{ env.INSTALL_PATH }}
+        key: ${{ matrix.release }}
      
     - name: Install 
-#       if: steps.my-cache.outputs.cache-hit != 'true'
+      if: steps.my-cache.outputs.cache-hit != 'true'
       run: |
         mkdir -p ${{ env.INSTALL_PATH }}
         echo abc >${{ env.INSTALL_PATH }}/token

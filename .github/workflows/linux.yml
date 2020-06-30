@@ -1,20 +1,36 @@
 name: Linux build
 
-on:
-  push:
-    branches:
-      - '*'
-    tags-ignore:
-      - '*'
-  pull_request:
+on: [push, pull_request]
 
 jobs:
-  test:
+  build:
+
     runs-on: ubuntu-latest
-    name: Tests this
+
+    strategy:
+      matrix:
+        release:
+          - 'alpha'
+  
+    env:
+      INSTALL_PATH: $HOME/raku-${{ matrix.release }}
+    
     steps:
-    - name: Checkout
-      uses: actions/checkout@v1
-    - name: Runs tests
-      id: tests
-      uses: JJ/raku-container-action@master
+    - uses: actions/checkout@v2
+
+    - name: env
+      run: env
+      
+    - name: Check Cache
+      id: my-cache
+      uses: actions/cache@v2
+      with:
+        path: ${{ env.INSTALL_PATH }}
+        key: ${{ matrix.release }}
+     
+    - name: zip version
+      run: |
+        echo INSTALL_PATH $INSTALL_PATH
+        echo RELEASE ${{ matrix.release }}
+
+    

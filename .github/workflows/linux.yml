@@ -16,17 +16,12 @@ jobs:
 #       INSTALL_PATH: $HOME/${{ matrix.release }}
                
     steps:
-      
-    - env:
-        INSTALL_PATH: $HOME/${{ matrix.release }}
-    
+         
     - uses: actions/checkout@v2
       
- 
-
-#     - name: Set
-#       run: |
-#         echo "::set-env name=INSTALL_PATH::$HOME/${{ matrix.release }}"
+    - name: Set
+      run: |
+        echo "::set-env name=INSTALL_PATH::$HOME/${{ matrix.release }}"
         
     - name: Show
       run: |
@@ -35,7 +30,7 @@ jobs:
         echo INSTALL_PATH ${{ env.INSTALL_PATH }}
         
     - name: env
-      run: env
+      run: env | grep INSTALL_PATH
       
     - name: Check Cache
       id: my-cache

@@ -14,10 +14,15 @@ jobs:
   
     env:
       INSTALL_PATH: $HOME/${{ matrix.release }}
-    
+               
     steps:
     - uses: actions/checkout@v2
 
+    - name: Work
+      run: |
+        echo INSTALL_PATH $INSTALL_PATH
+        echo RELEASE ${{ matrix.release }}
+        
     - name: env
       run: env
       
@@ -25,7 +30,7 @@ jobs:
       id: my-cache
       uses: actions/cache@v2
       with:
-        path: ${{ env.INSTALL_PATH }}
+        path: $INSTALL_PATH
         key: ${{ matrix.release }}
      
     - name: Install 
@@ -36,8 +41,6 @@ jobs:
              
     - name: Work
       run: |
-        echo INSTALL_PATH $INSTALL_PATH
-        echo RELEASE ${{ matrix.release }}
         cat ${{ env.INSTALL_PATH }}/token
 
     

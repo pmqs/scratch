@@ -32,12 +32,12 @@ jobs:
 #       if: steps.my-cache.outputs.cache-hit != 'true'
       run: |
         mkdir -p ${{ env.INSTALL_PATH }}
-        touch ${{ env.INSTALL_PATH }}/token
+        echo abc >${{ env.INSTALL_PATH }}/token
              
-#     - name: Work
-#       run: |
-#         echo INSTALL_PATH $INSTALL_PATH
-#         echo RELEASE ${{ matrix.release }}
-#         if [-e
+    - name: Work
+      run: |
+        echo INSTALL_PATH $INSTALL_PATH
+        echo RELEASE ${{ matrix.release }}
+        cat ${{ env.INSTALL_PATH }}/token
 
     

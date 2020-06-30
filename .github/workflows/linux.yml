@@ -5,12 +5,14 @@ on: [push, pull_request]
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
+        os: ['linux-latest', 'macos-latest']
         release:
           - 'alpha'
+          - 'beta'
   
 #     env:
 #       INSTALL_PATH: $HOME/${{ matrix.release }}
@@ -21,7 +23,7 @@ jobs:
       
     - name: Set
       run: |
-        echo "::set-env name=INSTALL_PATH::$HOME/${{ matrix.release }}"
+        echo "::set-env name=INSTALL_PATH::$HOME/${{ matrix.os }}.${{ matrix.release }}"
         
     - name: Show
       run: |
@@ -48,5 +50,6 @@ jobs:
     - name: Work
       run: |
         cat $INSTALL_PATH/token
+        echo this is ${{ matrix.release }} ${{ matrix.release }}
 
     

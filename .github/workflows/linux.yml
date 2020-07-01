@@ -40,7 +40,8 @@ jobs:
         BASEV=`echo ${{ matrix.release }} | sed -e 's/-.*$//' `          
         echo "BASEV is $BASEV"
         echo "::set-env name=INSTALL_PATH_BASE::$BASEV"      
-        echo $PATH = $PATH          
+        echo PATH = $PATH          
+        echo INSTALL_PATH_BASE=${{ env.INSTALL_PATH_BASE }}
         
     - name: Show
       run: |

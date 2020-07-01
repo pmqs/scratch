@@ -25,20 +25,24 @@ jobs:
       if: startsWith(matrix.os, 'windows')
       run: |
         echo "::set-env name=INSTALL_PATH::$HOME\${{ matrix.os }}.${{ matrix.release }}"
+        BASEV=`echo ${{ matrix.release }} | sed -e 's/-.*$//' `        
+        echo BASEV is $BASEV
+        echo "::set-env name=INSTALL_PATH_BASE::$BASEV"            
         
     - name: Set Linux/MacOS Path
       if: ${{ ! startsWith(matrix.os, 'windows') }}
       run: |
-        echo "::set-env name=INSTALL_PATH::$HOME/${{ matrix.os }}.${{ matrix.release }}"        
+        echo "::set-env name=INSTALL_PATH::$HOME/${{ matrix.os }}.${{ matrix.release }}"     
+        BASEV=`echo ${{ matrix.release }} | sed -e 's/-.*$//' `
+        echo BASEV is $BASEV
+        echo "::set-env name=INSTALL_PATH_BASE::$BASEV"               
         
     - name: Show
       run: |
         echo INSTALL_PATH $INSTALL_PATH
         echo RELEASE ${{ matrix.release }}
         echo INSTALL_PATH ${{ env.INSTALL_PATH }}
-        BASEV=`echo ${{ matrix.release }} | sed -e 's/-.*$//' `
-        echo $BASEV
-        echo "::set-env name=INSTALL_PATH_BASE::$BASEV"        
+    
         
         
     - name: env
@@ -51,7 +55,7 @@ jobs:
       uses: actions/cache@v2
       with:
         path: ${{ env.INSTALL_PATH }}
-        key: ${{ matrix.release }}
+        key: ${{ matrix.release }}x
      
 #     - name: Install 
 #       if: ${{ ! startsWith(matrix.os, 'windows') && steps.my-cache.outputs.cache-hit != 'true' }}
@@ -64,11 +68,12 @@ jobs:
       run: |
         mkdir ${{ env.INSTALL_PATH }}
         cd ${{ env.INSTALL_PATH }}
-        echo abc ${{ env.INSTALL_PATH_BASE }} >token
+        echo INSTALL_PATH_BASE is ${{ env.INSTALL_PATH_BASE }} >token
         
     - name: Work
       run: |
         cd ${{ env.INSTALL_PATH }}
+        echo token contains:
         cat token
         echo this is ${{ matrix.os }} ${{ matrix.release }}
 

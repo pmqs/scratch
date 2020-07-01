@@ -33,7 +33,7 @@ jobs:
       if: ${{ ! startsWith(matrix.os, 'windows') }}
       run: |
         echo "::set-env name=INSTALL_PATH::$HOME/${{ matrix.os }}.${{ matrix.release }}"     
-        BASEV=`echo ${{ matrix.release }} | sed -e 's/-.*$//' `
+        $BASEV = ${{ matrix.release }} -replace "-.*$", ""
         echo BASEV is $BASEV
         echo "::set-env name=INSTALL_PATH_BASE::$BASEV"               
         

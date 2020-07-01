@@ -14,8 +14,8 @@ jobs:
           - 'macos-latest'
           - 'windows-latest'
         release:
-          - 'alpha'
-          - 'beta'
+          - 'alpha-01'
+          - 'beta-01'
                 
     steps:
          
@@ -36,9 +36,14 @@ jobs:
         echo INSTALL_PATH $INSTALL_PATH
         echo RELEASE ${{ matrix.release }}
         echo INSTALL_PATH ${{ env.INSTALL_PATH }}
+        BASEV=`echo ${{ matrix.release }} | sed -e 's-.*$//`
+        echo "::set-env name=INSTALL_PATH_BASE::$BASEV"        
+        
         
     - name: env
-      run: env | grep INSTALL_PATH
+      run: |
+        env | grep INSTALL_PATH
+        env | grep INSTALL_PATH_BASE
       
     - name: Check Cache
       id: my-cache
@@ -58,7 +63,7 @@ jobs:
       run: |
         mkdir ${{ env.INSTALL_PATH }}
         cd ${{ env.INSTALL_PATH }}
-        echo abc >token
+        echo abc ${{ env.INSTALL_PATH_BASE }} >token
         
     - name: Work
       run: |

@@ -42,6 +42,7 @@ jobs:
         echo "::set-env name=INSTALL_PATH_BASE::$BASEV"      
         echo PATH = $PATH          
         echo INSTALL_PATH_BASE=${{ env.INSTALL_PATH_BASE }}
+        echo INSTALL_PATH_BASE=$INSTALL_PATH_BASE
         
     - name: Show
       run: |

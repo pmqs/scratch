@@ -35,7 +35,7 @@ jobs:
     - name: Set Linux/MacOS Path
       if: ${{ startsWith(matrix.os, 'windows') }}
       run: |
-        eecho abc >def
+        echo abc >def
         zip fred.zip abc
         unzip -l fred.zip  
                 

@@ -44,8 +44,8 @@ jobs:
     - name: GET FILENAME
       if: ${{ startsWith(matrix.os, 'windows') }}
       run: |
-        echo FILENAME $FILENAME
-        echo FN ${{ env.FILENAME }}
+        echo "FILENAME $FILENAME"
+        echo "FN ${{ env.FILENAME }}"
         
         
                 

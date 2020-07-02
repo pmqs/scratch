@@ -38,14 +38,14 @@ jobs:
         mkdir fred
         cd fred
         echo abc >def
-        $a = ls -Name
+        $a = $( ls -Name )
         echo "::set-env name=FILENAME::$a" 
 
     - name: GET FILENAME
       if: ${{ startsWith(matrix.os, 'windows') }}
       run: |
         echo FILENAME $FILENAME
-        echi FN ${{ env.FILENAME }}
+        echo FN ${{ env.FILENAME }}
         
         
                 

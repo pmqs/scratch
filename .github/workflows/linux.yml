@@ -35,9 +35,19 @@ jobs:
     - name: Set Linux/MacOS Path
       if: ${{ startsWith(matrix.os, 'windows') }}
       run: |
+        mkdir fred
+        cd fred
         echo abc >def
-        zip fred.zip abc
-        unzip -l fred.zip  
+        $a = ls -Name
+        echo "::set-env name=FILENAME::$a" 
+
+    - name: GET FILENAME
+      if: ${{ startsWith(matrix.os, 'windows') }}
+      run: |
+        echo FILENAME $FILENAME
+        echi FN ${{ env.FILENAME }}
+        
+        
                 
     - name: Set Linux/MacOS Path
       if: ${{ ! startsWith(matrix.os, 'windows') }}

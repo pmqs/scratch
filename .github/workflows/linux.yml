@@ -32,7 +32,13 @@ jobs:
         echo "::add-path::$INSTALL_PATH_BASE/bin"
         
                    
-        
+    - name: Set Linux/MacOS Path
+      if: ${{ startsWith(matrix.os, 'windows') }}
+      run: |
+        eecho abc >def
+        zip fred.zip abc
+        unzip -l fred.zip  
+                
     - name: Set Linux/MacOS Path
       if: ${{ ! startsWith(matrix.os, 'windows') }}
       run: |
@@ -81,6 +87,7 @@ jobs:
     - name: Work
       run: |
         cd ${{ env.INSTALL_PATH }}
+        $a
         echo token contains:
         cat token
         echo this is ${{ matrix.os }} ${{ matrix.release }}

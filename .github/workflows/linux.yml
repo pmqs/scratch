@@ -14,7 +14,7 @@ jobs:
           - 'macos-latest'
           - 'windows-latest'
         release:
-          - 'alpha-01'
+          - latest
           - 'beta-01'
                 
     steps:
@@ -30,6 +30,61 @@ jobs:
         echo MATCH $xx
       shell: bash
 
+    - name: Set Windows Path
+      run: |
+        xx=$( perl ${{ matrix.os }} ${{ matrix.release }}<<EOM 
+          #!/usr/bin/perl
+
+          use strict;
+          use warnings;
+
+          my %mapping = ( macos => "macos",
+                          ubuntu => "linux",
+                          windows => "win") ;
+
+          my $os = shift;
+          my $version = shift;
+
+          $os =~ s/-.+$//;
+
+          die "Unknown os $os\n"
+              if ! $mapping{$os} ;
+
+
+          if (lc $version ne 'latest')
+          {
+              print "$version\n" ;
+              exit;
+          }
+
+          my $url = "https://rakudo.org/downloads/rakudo" ;
+
+          my %versions;
+
+          my @data = `curl -q $url 2>/dev/null` ;
+
+          for my $line (@data)
+          {
+              #   <a href="/dl/rakudo/rakudo-moar-2020.06-01-linux-x86_64.tar.gz"
+              next
+                  unless $line =~ m#<a href="/dl/rakudo/rakudo-moar-([\d\.-]+?)-$os-x86_64#;
+
+              my $keep = $1;
+              my $sortable = $1;
+
+              $sortable =~ s/\.-//g;
+
+              # print "$keep => $sortable\n";
+
+              $versions{$sortable} = $keep;
+          }
+
+          print $versions{ (sort keys %versions)[-1] } . "\n";          
+          
+        EOM
+        )
+        echo MATCH $xx
+      shell: bash
         
                    
     - name: Set Linux/MacOS Path

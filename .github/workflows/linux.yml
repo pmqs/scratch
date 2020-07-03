@@ -15,7 +15,7 @@ jobs:
           - 'windows-latest'
         release:
           - latest
-          - 'beta-01'
+          - '2020.05.1.01'
                 
     steps:
          
@@ -30,14 +30,15 @@ jobs:
         echo MATCH $xx
       shell: bash
 
-    - name: Set Windows Path
+    - name: Check Raku version
       run: |
         xx=$( perl - ${{ matrix.os }} ${{ matrix.release }} <<'EOM'
+
             use strict;
             use warnings;
 
-            my %mapping = ( macos => 'macos',
-                            ubuntu => 'linux',
+            my %mapping = ( macos   => 'macos',
+                            ubuntu  => 'linux',
                             windows => 'win') ;
 
             my $os = shift ;
@@ -45,15 +46,9 @@ jobs:
 
             $os =~ s/-.+$//;
 
-            die qq[Unknown os $os\n]
+            die "Unknown os $os\n"
                 if ! $mapping{$os} ;
 
-
-            if (lc $version ne 'latest')
-            {
-                print qq[$version\n] ;
-                exit;
-            }
 
             my $url = 'https://rakudo.org/downloads/rakudo' ;
 
@@ -74,7 +69,18 @@ jobs:
                 $versions{$sortable} = $keep;
             }
 
-            print $versions{ (sort keys %versions)[-1] } . "\n";
+            if (lc $version ne 'latest')
+            {
+                die "Cannot find version $version\n"
+                    if ! $versions{lc $version};
+
+                print "$version\n" ;
+            }
+            else
+            {
+                print $versions{ (sort keys %versions)[-1] } . "\n";
+            }
+
 
                       
         EOM

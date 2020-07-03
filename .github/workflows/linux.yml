@@ -11,7 +11,7 @@ jobs:
       matrix:
         os: 
           - 'ubuntu-latest'
-#           - 'macos-latest'
+          - 'macos-latest'
           - 'windows-latest'
         release:
           - latest
@@ -34,7 +34,8 @@ jobs:
       run: |
         xx=$( perl - ${{ matrix.os }} ${{ matrix.release }} <<'EOM'
                  
-          
+            
+
             use strict;
             use warnings;
 
@@ -81,6 +82,7 @@ jobs:
             }
 
             print $versions{ (sort keys %versions)[-1] } . "\n";
+            
 
 
                       

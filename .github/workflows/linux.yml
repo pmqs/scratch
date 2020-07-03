@@ -64,7 +64,7 @@ jobs:
             for my $line (@data)
             {
                 next
-                    unless $line =~ m#<a href="/dl/rakudo/rakudo-moar-([\d\.-]+?)-$mapping{$os}-x86_64#;
+                    unless $line =~ m#<a href=./dl/rakudo/rakudo-moar-([\d\.-]+?)-$mapping{$os}-x86_64#;
 
                 my $keep = $1;
                 my $sortable = $1;
@@ -74,7 +74,7 @@ jobs:
                 $versions{$sortable} = $keep;
             }
 
-            print $versions{ (sort keys %versions)[-1] } . qq[\n];
+            print $versions{ (sort keys %versions)[-1] } . "\n";
 
                       
         EOM

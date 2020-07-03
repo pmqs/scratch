@@ -32,10 +32,9 @@ jobs:
 
     - name: Set Windows Path
       run: |
-        xx=$( perl <<EOM 
+        xx=$( perl - ${{ matrix.os }} ${{ matrix.release }} <<'EOM'
                  
-            #!/usr/bin/perl
-
+            
             use strict;
             use warnings;
 
@@ -43,8 +42,8 @@ jobs:
                             ubuntu => "linux",
                             windows => "win") ;
 
-            my $os = '${{ matrix.os }}' ;
-            my $version = '${{ matrix.release }}' ;
+            my $os = shift ;
+            my $version = shift ;
 
             $os =~ s/-.+$//;
 
@@ -81,6 +80,7 @@ jobs:
             }
 
             print $versions{ (sort keys %versions)[-1] } . "\n";
+
                       
         EOM
         )

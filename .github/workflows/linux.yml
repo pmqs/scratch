@@ -76,7 +76,7 @@ jobs:
                 $versions{$sortable} = $keep;
             }
 
-            print $versions{ (sort keys %versions)[-1] } . "\n";
+            print $versions{ (sort keys %versions)[-1] } . qq[\n];
                       
         EOM
         )

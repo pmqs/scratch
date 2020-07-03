@@ -33,15 +33,12 @@ jobs:
     - name: Set Windows Path
       run: |
         xx=$( perl - ${{ matrix.os }} ${{ matrix.release }} <<'EOM'
-                 
-            
-
             use strict;
             use warnings;
 
-            my %mapping = ( macos => "macos",
-                            ubuntu => "linux",
-                            windows => "win") ;
+            my %mapping = ( macos => 'macos',
+                            ubuntu => 'linux',
+                            windows => 'win') ;
 
             my $os = shift ;
             my $version = shift ;
@@ -59,7 +56,7 @@ jobs:
                 exit;
             }
 
-            my $url = "https://rakudo.org/downloads/rakudo" ;
+            my $url = 'https://rakudo.org/downloads/rakudo' ;
 
             my %versions;
 
@@ -76,15 +73,10 @@ jobs:
 
                 $sortable =~ s/\.-//g;
 
-                # print "$keep => $sortable\n";
-
                 $versions{$sortable} = $keep;
             }
 
             print $versions{ (sort keys %versions)[-1] } . "\n";
-            
-
-
                       
         EOM
         )

@@ -44,15 +44,14 @@ jobs:
             my $version = shift ;
 
             $os =~ s/-.+$//;
-            # print "OS[$os]\n";
 
-            die "Unknown os $os\n"
+            die qq[Unknown os $os\n]
                 if ! $mapping{$os} ;
 
 
             if (lc $version ne 'latest')
             {
-                print "$version\n" ;
+                print qq[$version\n] ;
                 exit;
             }
 
@@ -64,9 +63,8 @@ jobs:
 
             for my $line (@data)
             {
-                #   <a href="/dl/rakudo/rakudo-moar-2020.06-01-linux-x86_64.tar.gz"
                 next
-                    unless $line =~ m#<a href="/dl/rakudo/rakudo-moar-([\d\.-]+?)-$mapping{$os}-x86_64#;
+                    unless $line =~ m#<a href=./dl/rakudo/rakudo-moar-([\d\.-]+?)-$mapping{$os}-x86_64#;
 
                 my $keep = $1;
                 my $sortable = $1;
@@ -77,6 +75,7 @@ jobs:
             }
 
             print $versions{ (sort keys %versions)[-1] } . qq[\n];
+
                       
         EOM
         )

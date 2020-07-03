@@ -32,7 +32,7 @@ jobs:
 
     - name: Set Windows Path
       run: |
-        xx=$( perl ${{ matrix.os }} ${{ matrix.release }}<<EOM 
+        xx=$( perl <<EOM 
           #!/usr/bin/perl
 
           use strict;
@@ -42,8 +42,8 @@ jobs:
                           ubuntu => "linux",
                           windows => "win") ;
 
-          my $os = shift;
-          my $version = shift;
+          my $os = ${{ matrix.os }} ;
+          my $version = {{ matrix.release }} ;
 
           $os =~ s/-.+$//;
 

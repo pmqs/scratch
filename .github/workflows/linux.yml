@@ -33,54 +33,55 @@ jobs:
     - name: Set Windows Path
       run: |
         xx=$( perl <<EOM 
-          #!/usr/bin/perl
+                 
+            #!/usr/bin/perl
 
-          use strict;
-          use warnings;
+            use strict;
+            use warnings;
 
-          my %mapping = ( macos => "macos",
-                          ubuntu => "linux",
-                          windows => "win") ;
+            my %mapping = ( macos => "macos",
+                            ubuntu => "linux",
+                            windows => "win") ;
 
-          my $os = ${{ matrix.os }} ;
-          my $version = {{ matrix.release }} ;
+            my $os = '${{ matrix.os }}' ;
+            my $version = '${{ matrix.release }}' ;
 
-          $os =~ s/-.+$//;
+            $os =~ s/-.+$//;
 
-          die "Unknown os $os\n"
-              if ! $mapping{$os} ;
+            die "Unknown os $os\n"
+                if ! $mapping{$os} ;
 
 
-          if (lc $version ne 'latest')
-          {
-              print "$version\n" ;
-              exit;
-          }
+            if (lc $version ne 'latest')
+            {
+                print "$version\n" ;
+                exit;
+            }
 
-          my $url = "https://rakudo.org/downloads/rakudo" ;
+            my $url = "https://rakudo.org/downloads/rakudo" ;
 
-          my %versions;
+            my %versions;
 
-          my @data = `curl -q $url 2>/dev/null` ;
+            my @data = `curl -q $url 2>/dev/null` ;
 
-          for my $line (@data)
-          {
-              #   <a href="/dl/rakudo/rakudo-moar-2020.06-01-linux-x86_64.tar.gz"
-              next
-                  unless $line =~ m#<a href="/dl/rakudo/rakudo-moar-([\d\.-]+?)-$os-x86_64#;
+            for my $line (@data)
+            {
+                #   <a href="/dl/rakudo/rakudo-moar-2020.06-01-linux-x86_64.tar.gz"
+                next
+                    unless $line =~ m#<a href="/dl/rakudo/rakudo-moar-([\d\.-]+?)-$os-x86_64#;
 
-              my $keep = $1;
-              my $sortable = $1;
+                my $keep = $1;
+                my $sortable = $1;
 
-              $sortable =~ s/\.-//g;
+                $sortable =~ s/\.-//g;
 
-              # print "$keep => $sortable\n";
+                # print "$keep => $sortable\n";
 
-              $versions{$sortable} = $keep;
-          }
+                $versions{$sortable} = $keep;
+            }
 
-          print $versions{ (sort keys %versions)[-1] } . "\n";          
-          
+            print $versions{ (sort keys %versions)[-1] } . "\n";
+                      
         EOM
         )
         echo MATCH $xx

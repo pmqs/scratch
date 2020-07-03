@@ -11,8 +11,8 @@ jobs:
       matrix:
         os: 
           - 'ubuntu-latest'
-#           - 'macos-latest'
-#           - 'windows-latest'
+          - 'macos-latest'
+          - 'windows-latest'
         release:
           - 'alpha-01'
           - 'beta-01'
@@ -24,8 +24,9 @@ jobs:
     - name: Set Windows Path
       run: |
         perl <<EOM
-          print "hello world\n";
+          print "hello world ${{ matrix.release }}\n";
         EOM
+      shell: bash
 
         
                    

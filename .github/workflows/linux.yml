@@ -107,7 +107,7 @@ jobs:
 
       shell: bash
 
-    - name: Set Windows Path
+    - name: Set Windows Path for ${{ env.RAKU_VERSION }}
       run: |
           echo VERSION ${{ env.RAKU_VERSION }}
       shell: bash

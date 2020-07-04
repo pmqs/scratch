@@ -16,6 +16,7 @@ jobs:
         release:
           - latest
           - '2020.05.1.01'
+          - 2020
                 
     steps:
          
@@ -34,54 +35,67 @@ jobs:
       run: |
         xx=$( perl - ${{ matrix.os }} ${{ matrix.release }} <<'EOM'
 
+
             use strict;
             use warnings;
 
-            my %mapping = ( macos   => 'macos',
-                            ubuntu  => 'linux',
-                            windows => 'win') ;
+            my %os_mapping = ( macos   => 'macos',
+                               ubuntu  => 'linux',
+                               windows => 'win'
+                             ) ;
 
             my $os = shift ;
             my $version = shift ;
 
             $os =~ s/-.+$//;
 
-            die "Unknown os $os\n"
-                if ! $mapping{$os} ;
+            die "Unknown OS $os\n"
+                if ! $os_mapping{$os} ;
 
+            my %available;
+            my @available;
+            my @data = `curl -q https://rakudo.org/downloads/rakudo 2>/dev/null` ;
 
-            my $url = 'https://rakudo.org/downloads/rakudo' ;
-
-            my %versions;
-
-            my @data = `curl -q $url 2>/dev/null` ;
-
+            # get available versions for requested OS
             for my $line (@data)
             {
                 next
-                    unless $line =~ m#<a href=./dl/rakudo/rakudo-moar-([\d\.-]+?)-$mapping{$os}-x86_64#;
+                    unless $line =~ m#<a href=./dl/rakudo/rakudo-moar-([\d\.-]+?)-$os_mapping{$os}-x86_64#;
 
-                my $keep = $1;
-                my $sortable = $1;
-
-                $sortable =~ s/\.-//g;
-
-                $versions{$sortable} = $keep;
+                push @available, $1;
             }
 
-            if (lc $version ne 'latest')
-            {
-                die "Cannot find version $version\n"
-                    if ! $versions{lc $version};
+            my $max = 0;
 
-                print "$version\n" ;
+            map { $max = $max < $_ ? $_ : $max }
+            map { scalar split /\D+/, $_ }
+            @available ;
+
+            for my $v (@available)
+            {
+                my @bits = split /\D+/, $v ;
+                push @bits, 0 for @bits .. $max ;
+                my $sortable = join '', map { sprintf "%04d", $_ } @bits ;
+
+                $available{$sortable} = $v;
+            }
+
+            if (lc $version eq 'latest')
+            {
+                print $available{ (sort keys %available)[-1] } . "\n";
             }
             else
             {
-                print $versions{ (sort keys %versions)[-1] } . "\n";
+                my @got = grep { ! index $_, $version }
+                          map  { $available{ $_ }     }
+                          sort { $b <=> $a            }
+                          keys %available ;
+
+                die "Cannot find Raku version $version for $os\n"
+                    if ! @got;
+
+                print "$got[0]\n" ;
             }
-
-
                       
         EOM
         )

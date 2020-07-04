@@ -54,7 +54,7 @@ jobs:
 
             my %available;
             my @available;
-            my @data = `curl -q --connect-timeout 5 https://rakudo.org
+            my @data = `curl -s --connect-timeout 5 https://rakudo.org
             /downloads/rakudo 2>/dev/null` ;
 
             die "Cannot fetch versions: $@\n"
@@ -95,9 +95,6 @@ jobs:
                           sort { $b <=> $a            }
                           keys %available ;
 
-                warn "$version matched\n:";
-                warn "\t$_\n" for @got;
-                
                 die "Cannot find Raku version $version for $os\n"
                     if ! @got;
 

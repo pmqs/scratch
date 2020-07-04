@@ -24,6 +24,7 @@ jobs:
       
     - name: Set Windows Path
       run: |
+        prove --version
         xx=$( perl <<EOM 
           print "hello world ${{ matrix.release }}\n";
         EOM

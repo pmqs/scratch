@@ -33,7 +33,7 @@ jobs:
 
     - name: Check Raku version
       run: |
-        xx=$( perl - ${{ matrix.os }} ${{ matrix.release }} <<'EOM'
+        RakuVersion=$( perl - ${{ matrix.os }} ${{ matrix.release }} <<'EOM'
 
 
             use strict;
@@ -103,7 +103,12 @@ jobs:
                       
         EOM
         )
-        echo MATCH $xx
+        echo MATCH $RakuVersion
+        echo "::set-env name=RAKU_VERSION::$RakuVersion"         
+
       shell: bash
-        
-     
+
+    - name: Set Windows Path
+      run: |
+          echo VERSION ${{ env.RAKU_VERSION }}
+      shell: bash

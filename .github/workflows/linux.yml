@@ -21,15 +21,16 @@ jobs:
     steps:
          
     - uses: actions/checkout@v2
-      
+
+    - name: Set Raku install Path in Windows format
+      if: ${{ startsWith(matrix.os, 'windows') }}
+      run: |
+        prove.bat --version 
+        
     - name: Set Windows Path
+      if: ${{ ! startsWith(matrix.os, 'windows') }}
       run: |
         prove --version
-        xx=$( perl <<EOM 
-          print "hello world ${{ matrix.release }}\n";
-        EOM
-        )
-        echo MATCH $xx
       shell: bash
 
     - name: Check Raku version

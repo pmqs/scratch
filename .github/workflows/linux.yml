@@ -54,8 +54,7 @@ jobs:
 
             my %available;
             my @available;
-            my @data = `curl -s --connect-timeout 5 https://rakudo.org
-            /downloads/rakudo 2>/dev/null` ;
+            my @data = `curl -s --connect-timeout 5 https://rakudo.org/downloads/rakudo 2>/dev/null` ;
 
             die "Cannot fetch versions: $@\n"
                 if $@;
@@ -100,7 +99,7 @@ jobs:
 
                 print "$got[0]\n" ;
             }
-                      
+            
         EOM
         )
         echo MATCH $RakuVersion

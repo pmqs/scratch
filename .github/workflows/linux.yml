@@ -26,6 +26,7 @@ jobs:
       if: ${{ startsWith(matrix.os, 'windows') }}
       run: |
         prove.bat --version 
+        vcpkg list
         
     - name: Set Windows Path
       if: ${{ ! startsWith(matrix.os, 'windows') }}

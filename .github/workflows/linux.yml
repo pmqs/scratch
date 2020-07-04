@@ -28,6 +28,7 @@ jobs:
         prove.bat --version 
         vcpkg list
         vcpkg search zlib
+        vcpkg install zlib
         
     - name: Set Windows Path
       if: ${{ ! startsWith(matrix.os, 'windows') }}

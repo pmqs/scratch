@@ -26,6 +26,7 @@ jobs:
       if: ${{ startsWith(matrix.os, 'windows') }}
       run: |
         prove.bat --version 
+        echo VCPKG_ROOT $VCPKG_ROOT
         vcpkg list
         vcpkg search zlib
         vcpkg install zlib

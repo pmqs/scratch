@@ -54,7 +54,11 @@ jobs:
 
             my %available;
             my @available;
-            my @data = `curl -q https://rakudo.org/downloads/rakudo 2>/dev/null` ;
+            my @data = `curl -q --connect-timeout 5 https://rakudo.org
+            /downloads/rakudo 2>/dev/null` ;
+
+            die "Cannot fetch versions: $@\n"
+                if $@;
 
             # get available versions for requested OS
             for my $line (@data)
@@ -75,9 +79,9 @@ jobs:
             {
                 my @bits = split /\D+/, $v ;
                 push @bits, 0 for @bits .. $max ;
-                my $sortable = join '', map { sprintf "%04d", $_ } @bits ;
+                my $numeric = join '', map { sprintf "%04d", $_ } @bits ;
 
-                $available{$sortable} = $v;
+                $available{$numeric} = $v;
             }
 
             if (lc $version eq 'latest')
@@ -91,6 +95,9 @@ jobs:
                           sort { $b <=> $a            }
                           keys %available ;
 
+                warn "$version matched\n:";
+                warn "\t$_\n" for @got;
+                
                 die "Cannot find Raku version $version for $os\n"
                     if ! @got;
 

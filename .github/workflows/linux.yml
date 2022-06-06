@@ -57,6 +57,7 @@ jobs:
         echo ZLIB_LIB $ZLIB_LIB
         ls
         echo ZLIB_INCLUDE $ZLIB_INCLUDE
+        echo ./configure --prefix ${HOME}/upstream-zlib-install
         ./configure --prefix ${HOME}/upstream-zlib-install
         make
         make test
@@ -73,6 +74,6 @@ jobs:
            
       env:
         BUILD_ZLIB: 0
-        ZLIB_LIB: $HOME/upstream-zlib-install/lib
+        ZLIB_LIB: ${{ env.HOME }}/upstream-zlib-install/lib
         ZLIB_INCLUDE: $HOME/upstream-zlib-install/include
         

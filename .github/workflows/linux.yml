@@ -57,10 +57,17 @@ jobs:
         echo ZLIB_LIB $ZLIB_LIB
         ls
         echo ZLIB_INCLUDE $ZLIB_INCLUDE
-        ls $HOME/upstream-zlib-source
+        ./configure --prefix ${HOME}/upstream-zlib-install
+        make
+        make test
+        make install
              
       working-directory: $HOME/upstream-zlib-source     
      
+    - name: POST
+      run: |
+        echo ${HOME}/upstream-zlib-instal
+        ls ${HOME}/upstream-zlib-instal
            
       #env:
       #  BUILD_ZLIB: 0

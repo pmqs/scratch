@@ -66,11 +66,13 @@ jobs:
      
     - name: POST
       run: |
-        echo ${HOME}/upstream-zlib-instal
-        ls ${HOME}/upstream-zlib-instal
+        echo ${HOME}/upstream-zlib-install
+        echo ZLIB_LIB $ZLIB_LIB
+        echo ZLIB_INCLUDE $ZLIB_INCLUDE        
+        ls ${HOME}/upstream-zlib-install
            
-      #env:
-      #  BUILD_ZLIB: 0
-      #  ZLIB_LIB: ${{ matrix.zlib-install }}/lib
-      #  ZLIB_INCLUDE: ${{ matrix.zlib-install }}/include
+      env:
+        BUILD_ZLIB: 0
+        ZLIB_LIB: ${HOME}/upstream-zlib-install/lib
+        ZLIB_INCLUDE: ${HOME}/upstream-zlib-install/include
         

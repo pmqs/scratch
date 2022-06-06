@@ -57,7 +57,7 @@ jobs:
         echo ZLIB_LIB $ZLIB_LIB
         echo ZLIB_INCLUDE $ZLIB_INCLUDE
              
-      working-directory: ${{ env.zlib-source }}      
+      working-directory: ${HOME}/upstream-zlib-source     
      
            
       #env:

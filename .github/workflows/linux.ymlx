@@ -1,119 +1,66 @@
-name: Linux build
+name: Linux build with upstream zlib
 
 on: [push, pull_request]
 
+# upstream build derivbed from https://github.com/madler/zlib/pull/506
+ 
+
+  
 jobs:
   build:
 
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        os: 
-          - 'ubuntu-latest'
-          - 'macos-latest'
-          - 'windows-latest'
-        release:
-          - latest
-          - 2020.05.1-01
-          - 2020
-                
+        perl:
+          - '5.36'
+        zlib-version:
+          - 1.2.12
+          
+        #include:
+        #  - zlib-source: ${HOME}/upstream-zlib-source
+        #    zlib-install: ${HOME}/upstream-zlib-install
+
+    env:
+      zlib-source: ${HOME}/upstream-zlib-source
+      zlib-install: ${HOME}/upstream-zlib-install
+      ZLIB_LIB: ${HOME}/upstream-zlib-install/lib
+      ZLIB_INCLUDE: ${HOME}/upstream-zlib-install/include     
+      h1: "$HOME"
+      h2: "${HOME}"
+      h3: $HOME
+      h4: ${HOME}
+      h5: ${{ env.HOME }}
+      h6: ${{ env.HOME }}      
+      
+    name: Perl ${{ matrix.perl }} with zlib :${{matrix.zlib-version}}
     steps:
-         
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v1
 
-    - name: Set Raku install Path in Windows format
-      if: ${{ startsWith(matrix.os, 'windows') }}
+    - name: Checkout upstream zlib ${{matrix.zlib-version}}
+      uses: actions/checkout@v2
+      with:
+        repository: madler/zlib
+        path: ${{ env.zlib-source }}
+
+    - name: Build zlib ${{matrix.zlib-version}}
       run: |
-        prove.bat --version 
-        echo VCPKG_ROOT $VCPKG_ROOT
-        vcpkg list
-        vcpkg search zlib
-        vcpkg install zlib
+        echo h1 $h1
+        echo h2 $h2
+        echo h3 $h3
+        echo h4 $h4
+        echo h5 $h5
+        echo h6 $h6
+        echo HOME ${HOME}
+        echo ZLIB_LIB $ZLIB_LIB
+        echo ZLIB_INCLUDE $ZLIB_INCLUDE
+        find ${HOME}/upstream-zlib-install      
+      working-directory: ${{ env.zlib-source }}      
+     
+           
+      #env:
+      #  BUILD_ZLIB: 0
+      #  ZLIB_LIB: ${{ matrix.zlib-install }}/lib
+      #  ZLIB_INCLUDE: ${{ matrix.zlib-install }}/include
         
-    - name: Set Windows Path
-      if: ${{ ! startsWith(matrix.os, 'windows') }}
-      run: |
-        prove --version
-      shell: bash
-
-    - name: Check Raku version
-      run: |
-        RakuVersion=$( perl - ${{ matrix.os }} ${{ matrix.release }} <<'EOM'
-
-
-            use strict;
-            use warnings;
-
-            my %os_mapping = ( macos   => 'macos',
-                               ubuntu  => 'linux',
-                               windows => 'win'
-                             ) ;
-
-            my $os = shift ;
-            my $version = shift ;
-
-            $os =~ s/-.+$//;
-
-            die "Unknown OS $os\n"
-                if ! $os_mapping{$os} ;
-
-            my %available;
-            my @available;
-            my @data = `curl -s --connect-timeout 5 https://rakudo.org/downloads/rakudo 2>/dev/null` ;
-
-            die "Cannot fetch versions: $@\n"
-                if $@;
-
-            # get available versions for requested OS
-            for my $line (@data)
-            {
-                next
-                    unless $line =~ m#<a href=./dl/rakudo/rakudo-moar-([\d\.-]+?)-$os_mapping{$os}-x86_64#;
-
-                push @available, $1;
-            }
-
-            my $max = 0;
-
-            map { $max = $max < $_ ? $_ : $max }
-            map { scalar split /\D+/, $_ }
-            @available ;
-
-            for my $v (@available)
-            {
-                my @bits = split /\D+/, $v ;
-                push @bits, 0 for @bits .. $max ;
-                my $numeric = join '', map { sprintf "%04d", $_ } @bits ;
-
-                $available{$numeric} = $v;
-            }
-
-            if (lc $version eq 'latest')
-            {
-                print $available{ (sort keys %available)[-1] } . "\n";
-            }
-            else
-            {
-                my @got = grep { ! index $_, $version }
-                          map  { $available{ $_ }     }
-                          sort { $b <=> $a            }
-                          keys %available ;
-
-                die "Cannot find Raku version $version for $os\n"
-                    if ! @got;
-
-                print "$got[0]\n" ;
-            }
-            
-        EOM
-        )
-        echo MATCH $RakuVersion
-        echo "::set-env name=RAKU_VERSION::$RakuVersion"         
-
-      shell: bash
-
-    - name: Set Windows Path for ${{ env.RAKU_VERSION }}
-      run: |
-          echo VERSION ${{ env.RAKU_VERSION }}
-      shell: bash

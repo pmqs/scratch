@@ -57,7 +57,7 @@ jobs:
         echo ZLIB_LIB $ZLIB_LIB
         ls
         echo ZLIB_INCLUDE $ZLIB_INCLUDE
-        ls ${HOME}/upstream-zlib-source
+        ls $HOME/upstream-zlib-source
              
       working-directory: $HOME/upstream-zlib-source     
      

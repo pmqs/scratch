@@ -55,7 +55,9 @@ jobs:
         echo h6 $h6
         echo HOME ${HOME}
         echo ZLIB_LIB $ZLIB_LIB
+        ls
         echo ZLIB_INCLUDE $ZLIB_INCLUDE
+        ls ${HOME}/upstream-zlib-source
              
       working-directory: $HOME/upstream-zlib-source     
      

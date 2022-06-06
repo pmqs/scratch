@@ -45,11 +45,13 @@ jobs:
 
     - name: Build zlib ${{matrix.zlib-version}}
       run: |
+        pwd
         echo h1 $h1
         echo h2 $h2
         echo h3 $h3
         echo h4 $h4
         echo envhome ${{ env.HOME }}
+        echo 
         echo h6 $h6
         echo HOME ${HOME}
         echo ZLIB_LIB $ZLIB_LIB

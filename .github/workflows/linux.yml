@@ -31,8 +31,7 @@ jobs:
       h2: "${HOME}"
       h3: $HOME
       h4: ${HOME}
-      h5: ${{ env.HOME }}
-      h6: ${{ env.HOME }}      
+
       
     name: Perl ${{ matrix.perl }} with zlib :${{matrix.zlib-version}}
     steps:

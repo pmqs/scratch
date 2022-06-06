@@ -49,12 +49,12 @@ jobs:
         echo h2 $h2
         echo h3 $h3
         echo h4 $h4
-        echo h5 $h5
+        echo envhome ${{ env.HOME }}
         echo h6 $h6
         echo HOME ${HOME}
         echo ZLIB_LIB $ZLIB_LIB
         echo ZLIB_INCLUDE $ZLIB_INCLUDE
-        find ${HOME}/upstream-zlib-install      
+             
       working-directory: ${{ env.zlib-source }}      
      
            

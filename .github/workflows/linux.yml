@@ -45,7 +45,9 @@ jobs:
         echo "action_state=yellow" >> $GITHUB_ENV
 
     - name: env
-      run: env
+      run: |
+        echo AS $action_state
+        env
 
        
     - name: Checkout upstream zlib ${{matrix.zlib-version}}

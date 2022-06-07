@@ -33,10 +33,21 @@ jobs:
       h4: ${HOME}
 
       
-    name: Perl ${{ matrix.perl }} with zlib :${{matrix.zlib-version}}
+    name: Perl ${{ matrix.perl }} with zlib ${{matrix.zlib-version}}
     steps:
     - uses: actions/checkout@v1
 
+    - name: env
+      run: env
+      
+    - name: Set Variables
+      run: | 
+        echo "action_state=yellow" >> $GITHUB_ENV
+
+    - name: env
+      run: env
+
+       
     - name: Checkout upstream zlib ${{matrix.zlib-version}}
       uses: actions/checkout@v2
       with:

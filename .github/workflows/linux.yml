@@ -53,6 +53,7 @@ jobs:
         #mkdir -p $zlib-source
 
    
+    - uses: actions/checkout@v1
 
 
     - name: Checkout upstream zlib ${{matrix.zlib-version}}
@@ -116,7 +117,6 @@ jobs:
         #ZLIB_INCLUDE: $HOME/upstream-zlib-install/include
         
 
-    - uses: actions/checkout@v1
     - name: Setup perl
       uses: shogo82148/actions-setup-perl@v1
       with:

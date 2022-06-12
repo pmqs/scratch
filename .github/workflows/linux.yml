@@ -88,12 +88,6 @@ jobs:
         cd ${{ env.zlib-source }}
 
         pwd
-        echo h1 $h1
-        echo h2 $h2
-        echo h3 $h3
-        echo h4 $h4
-        echo E1 $E1
-        echi E! ${{ env.E1 }}
         echo envhome ${{ env.HOME }}
         echo 
         echo h6 $h6
@@ -101,12 +95,13 @@ jobs:
         echo ZLIB_LIB $ZLIB_LIB
         ls
         echo ZLIB_INCLUDE $ZLIB_INCLUDE
-        cd $zlib-source
-        echo ./configure --prefix ${HOME}/upstream-zlib-install
+        echo ./configure --prefix ${{ env.zlib-install }}
         ./configure --prefix ${{ env.zlib-install }}
         make
         make test
         make install
+      working-directory: ${{ env.zlib-source  }}
+        
              
   
      
@@ -115,8 +110,8 @@ jobs:
         echo ${HOME}/upstream-zlib-install
         echo ZLIB_LIB $ZLIB_LIB
         echo ZLIB_INCLUDE $ZLIB_INCLUDE  
+        echo env.zlib-install ${{ env.zlib-install }}        
         ls ${{ env.zlib-install }}
-        ls ${HOME}/upstream-zlib-install
            
       env:
         BUILD_ZLIB: 0

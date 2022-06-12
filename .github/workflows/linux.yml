@@ -85,6 +85,8 @@ jobs:
       
     - name: Build zlib ${{matrix.zlib-version}}
       run: |
+        cd ${{ env.zlib-source }}
+
         pwd
         echo h1 $h1
         echo h2 $h2
@@ -101,7 +103,7 @@ jobs:
         echo ZLIB_INCLUDE $ZLIB_INCLUDE
         cd $zlib-source
         echo ./configure --prefix ${HOME}/upstream-zlib-install
-        ./configure --prefix $zlib-install
+        ./configure --prefix ${{ env.zlib-install }}
         make
         make test
         make install
@@ -112,7 +114,8 @@ jobs:
       run: |
         echo ${HOME}/upstream-zlib-install
         echo ZLIB_LIB $ZLIB_LIB
-        echo ZLIB_INCLUDE $ZLIB_INCLUDE        
+        echo ZLIB_INCLUDE $ZLIB_INCLUDE  
+        ls ${{ env.zlib-install }}
         ls ${HOME}/upstream-zlib-install
            
       env:

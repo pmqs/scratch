@@ -63,7 +63,9 @@ jobs:
       uses: actions/checkout@v2
       with:
         repository: madler/zlib
-        path: $zlib-source
+        path: ${{ env.zlib-source }}
+
+        #path: $zlib-source
 #        path: $HOME/upstream-zlib-source
         
 

@@ -107,6 +107,7 @@ jobs:
      
     - name: POST
       run: |
+        pwd
         echo ${HOME}/upstream-zlib-install
         echo ZLIB_LIB $ZLIB_LIB
         echo ZLIB_INCLUDE $ZLIB_INCLUDE  

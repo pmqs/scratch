@@ -123,8 +123,8 @@ jobs:
         perl-version: ${{ matrix.perl }}
     - name: Perl version
       run: perl -V
-    - name: Install dependencies
-      run: cpanm --verbose --installdeps --notest .
+    #- name: Install dependencies
+     # run: cpanm --verbose --installdeps --notest .
     - name: Build
       run: perl Makefile.PL && make
       env:

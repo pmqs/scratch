@@ -19,7 +19,7 @@ jobs:
           - 1.2.12
           
         include:
-           - E1: ${{ env.HOME }}
+           - E1: $HOME
         #  - zlib-source: ${HOME}/upstream-zlib-source
         #    zlib-install: ${HOME}/upstream-zlib-install
 

@@ -53,7 +53,6 @@ jobs:
         #mkdir -p $zlib-source
 
    
-    - uses: actions/checkout@v1
 
 
     - name: Checkout upstream zlib ${{matrix.zlib-version}}
@@ -116,6 +115,7 @@ jobs:
         #ZLIB_LIB: ${{ env.HOME }}/upstream-zlib-install/lib
         #ZLIB_INCLUDE: $HOME/upstream-zlib-install/include
         
+    - uses: actions/checkout@v1
 
     - name: Setup perl
       uses: shogo82148/actions-setup-perl@v1
@@ -126,8 +126,9 @@ jobs:
     #- name: Install dependencies
      # run: cpanm --verbose --installdeps --notest .
     - name: Build
-      run: perl Makefile.PL && make
+      run: pwd
+      #run: perl Makefile.PL && make
       env:
         BUILD_ZLIB: ${{matrix.build-zlib}}      
-    - name: Test
-      run: make test
+    #- name: Test
+    #  run: make test

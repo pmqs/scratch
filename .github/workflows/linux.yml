@@ -54,20 +54,26 @@ jobs:
         echo AS $action_state
         echo "{environment_variable_name}={value}" >> $GITHUB_ENV
         env
+        mkdir -p $zlib-source
 
-    - name: Test1
-      run: |
-        pwd
-        env
-      working-directory: $zlib-source    
+   
 
 
     - name: Checkout upstream zlib ${{matrix.zlib-version}}
       uses: actions/checkout@v2
       with:
         repository: madler/zlib
-        path: $HOME/upstream-zlib-source
+        path: $zlib-source
+#        path: $HOME/upstream-zlib-source
+        
 
+    - name: Test1
+      run: |
+        pwd
+        ls
+        env
+      working-directory: $zlib-source 
+      
     - name: Build zlib ${{matrix.zlib-version}}
       run: |
         pwd

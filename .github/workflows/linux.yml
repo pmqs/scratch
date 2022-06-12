@@ -69,7 +69,7 @@ jobs:
 
     - name: Test0
       run: |
-        cd $zlib-source
+        cd ${{ env.zlib-source }}
         pwd
         ls
         

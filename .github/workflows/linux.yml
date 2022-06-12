@@ -18,7 +18,8 @@ jobs:
         zlib-version:
           - 1.2.12
           
-        #include:
+        include:
+           - E1: ${{ env.HOME }}
         #  - zlib-source: ${HOME}/upstream-zlib-source
         #    zlib-install: ${HOME}/upstream-zlib-install
 
@@ -31,7 +32,7 @@ jobs:
       h2: "${HOME}"
       h3: $HOME
       h4: ${HOME}
-      E1: ${{ env.HONE }}
+     
 
       
     name: Perl ${{ matrix.perl }} with zlib ${{matrix.zlib-version}}

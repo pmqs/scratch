@@ -31,6 +31,7 @@ jobs:
       h2: "${HOME}"
       h3: $HOME
       h4: ${HOME}
+      E1: ${{ env.HONE }}
 
       
     name: Perl ${{ matrix.perl }} with zlib ${{matrix.zlib-version}}
@@ -63,6 +64,8 @@ jobs:
         echo h2 $h2
         echo h3 $h3
         echo h4 $h4
+        echo E1 $E1
+        echi E! ${{ env.E1 }}
         echo envhome ${{ env.HOME }}
         echo 
         echo h6 $h6

@@ -44,7 +44,7 @@ jobs:
       
     - name: Set Env
       run: | 
-        echo "zlib-source=${HOME}/upstream-zlib-source" >> $GITHUB_ENV
+        echo "zlib-source=${GITHUB_WORKSPACE}/upstream-zlib-source" >> $GITHUB_ENV
         echo "zlib-install=${HOME}/upstream-zlib-install" >> $GITHUB_ENV
         echo "ZLIB_LIB=${HOME}/upstream-zlib-install/lib" >> $GITHUB_ENV
         echo "ZLIB_INCLUDE=${HOME}/upstream-zlib-install/include" >> $GITHUB_ENV

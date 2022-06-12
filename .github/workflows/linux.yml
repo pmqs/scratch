@@ -54,7 +54,7 @@ jobs:
         echo AS $action_state
         echo "{environment_variable_name}={value}" >> $GITHUB_ENV
         env
-        mkdir -p $zlib-source
+        #mkdir -p $zlib-source
 
    
 

@@ -67,6 +67,13 @@ jobs:
 #        path: $HOME/upstream-zlib-source
         
 
+    - name: Test0
+      run: |
+        cd $zlib-source
+        pwd
+        ls
+        
+      
     - name: Test1
       run: |
         pwd
@@ -90,13 +97,14 @@ jobs:
         echo ZLIB_LIB $ZLIB_LIB
         ls
         echo ZLIB_INCLUDE $ZLIB_INCLUDE
+        cd $zlib-source
         echo ./configure --prefix ${HOME}/upstream-zlib-install
-        ./configure --prefix ${HOME}/upstream-zlib-install
+        ./configure --prefix $zlib-install
         make
         make test
         make install
              
-      working-directory: $HOME/upstream-zlib-source     
+  
      
     - name: POST
       run: |
@@ -107,6 +115,6 @@ jobs:
            
       env:
         BUILD_ZLIB: 0
-        ZLIB_LIB: ${{ env.HOME }}/upstream-zlib-install/lib
-        ZLIB_INCLUDE: $HOME/upstream-zlib-install/include
+        #ZLIB_LIB: ${{ env.HOME }}/upstream-zlib-install/lib
+        #ZLIB_INCLUDE: $HOME/upstream-zlib-install/include
         

@@ -24,10 +24,10 @@ jobs:
         #    zlib-install: ${HOME}/upstream-zlib-install
 
     env:
-      zlib-source: ${HOME}/upstream-zlib-source
-      zlib-install: ${HOME}/upstream-zlib-install
-      ZLIB_LIB: ${HOME}/upstream-zlib-install/lib
-      ZLIB_INCLUDE: ${HOME}/upstream-zlib-install/include     
+      #zlib-source: ${HOME}/upstream-zlib-source
+      #zlib-install: ${HOME}/upstream-zlib-install
+      #ZLIB_LIB: ${HOME}/upstream-zlib-install/lib
+      #ZLIB_INCLUDE: ${HOME}/upstream-zlib-install/include     
       h1: "$HOME"
       h2: "${HOME}"
       h3: $HOME
@@ -42,16 +42,26 @@ jobs:
     - name: env
       run: env
       
-    - name: Set Variables
+    - name: Set Env
       run: | 
-        echo "action_state=yellow" >> $GITHUB_ENV
+        echo "zlib-source: ${HOME}/upstream-zlib-source" >> $GITHUB_ENV
+        echo "zlib-install: ${HOME}/upstream-zlib-install" >> $GITHUB_ENV
+        echo "ZLIB_LIB: ${HOME}/upstream-zlib-install/lib" >> $GITHUB_ENV
+        echo "ZLIB_INCLUDE: ${HOME}/upstream-zlib-install/include" >> $GITHUB_ENV
 
-    - name: env
+    - name: set env
       run: |
         echo AS $action_state
+        echo "{environment_variable_name}={value}" >> $GITHUB_ENV
         env
 
-       
+    - name: Test1
+      run: |
+        pwd
+        env
+      working-directory: $zlib-source    
+
+
     - name: Checkout upstream zlib ${{matrix.zlib-version}}
       uses: actions/checkout@v2
       with:

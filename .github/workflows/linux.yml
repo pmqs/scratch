@@ -12,3 +12,23 @@ jobs:
     steps:
     - name: env
       run: gunzip -h   
+
+  mac:
+
+#     runs-on: [ ubuntu-latest, macos-latest, windows-latest]
+    runs-on: macos-latest         
+      
+    name: Perl 
+    steps:
+    - name: env
+      run: gunzip -h 
+      
+  windows:
+
+#     runs-on: [ ubuntu-latest, macos-latest, windows-latest]
+    runs-on: windows-latest        
+      
+    name: Perl 
+    steps:
+    - name: env
+      run: gunzip -h       

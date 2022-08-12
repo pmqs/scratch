@@ -2,133 +2,23 @@ name: Linux build with upstream zlib
 
 on: [push, pull_request]
 
-# upstream build derivbed from https://github.com/madler/zlib/pull/506
- 
-
-  
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: 
+     ubuntu-latest
+     macos-latest
+     windows-latest
 
     strategy:
       matrix:
         perl:
           - '5.36'
-        zlib-version:
-          - 1.2.12
           
-
-    env:
-      #zlib-source: ${HOME}/upstream-zlib-source
-      #zlib-install: ${HOME}/upstream-zlib-install
-      #ZLIB_LIB: ${HOME}/upstream-zlib-install/lib
-      #ZLIB_INCLUDE: ${HOME}/upstream-zlib-install/include     
-      h1: "$HOME"
-      h2: "${HOME}"
-      h3: $HOME
-      h4: ${HOME}
-     
-
       
-    name: Perl ${{ matrix.perl }} with zlib ${{matrix.zlib-version}}
+    name: Perl 
     steps:
-    - uses: actions/checkout@v1
-
     - name: env
-      run: env
+      run: gunzip -h
       
-    - name: Set Env
-      run: | 
-        echo "zlib-source=${GITHUB_WORKSPACE}/upstream-zlib-source-${{ matrix.zlib-version }}" >> $GITHUB_ENV
-        echo "zlib-install=${HOME}/upstream-zlib-install-${{ matrix.zlib-version }}" >> $GITHUB_ENV
-        echo "ZLIB_LIB=${HOME}/upstream-zlib-install-${{ matrix.zlib-version }}/lib" >> $GITHUB_ENV
-        echo "ZLIB_INCLUDE=${HOME}/upstream-zlib-install-${{ matrix.zlib-version }}/include" >> $GITHUB_ENV
-
-    - name: set env
-      run: |
-        echo AS $action_state
-        echo "{environment_variable_name}={value}" >> $GITHUB_ENV
-        env
-        #mkdir -p $zlib-source
-
-   
-
-
-    - name: Checkout upstream zlib ${{matrix.zlib-version}}
-      uses: actions/checkout@v2
-      with:
-        repository: madler/zlib
-        path: ${{ env.zlib-source }}
-
-        #path: $zlib-source
-#        path: $HOME/upstream-zlib-source
-        
-
-    - name: Test0
-      run: |
-        cd ${{ env.zlib-source }}
-        pwd
-        ls
-        
-      
-    - name: Test1
-      run: |
-        pwd
-        ls
-        env
-      working-directory: ${{ env.zlib-source  }}
-      
-    - name: Build zlib ${{matrix.zlib-version}}
-      run: |
-        cd ${{ env.zlib-source }}
-
-        pwd
-        echo envhome ${{ env.HOME }}
-        echo 
-        echo h6 $h6
-        echo HOME ${HOME}
-        echo ZLIB_LIB $ZLIB_LIB
-        ls
-        echo ZLIB_INCLUDE $ZLIB_INCLUDE
-        echo ./configure --prefix ${{ env.zlib-install }}
-        ./configure --prefix ${{ env.zlib-install }}
-        make
-        make test
-        make install
-      working-directory: ${{ env.zlib-source  }}
-        
-             
-  
-     
-    - name: POST
-      run: |
-        pwd
-        echo ${HOME}/upstream-zlib-install
-        echo ZLIB_LIB $ZLIB_LIB
-        echo ZLIB_INCLUDE $ZLIB_INCLUDE  
-        echo env.zlib-install ${{ env.zlib-install }}        
-        ls ${{ env.zlib-install }}
-           
-      env:
-        BUILD_ZLIB: 0
-        #ZLIB_LIB: ${{ env.HOME }}/upstream-zlib-install/lib
-        #ZLIB_INCLUDE: $HOME/upstream-zlib-install/include
-        
-    - uses: actions/checkout@v1
-
-    - name: Setup perl
-      uses: shogo82148/actions-setup-perl@v1
-      with:
-        perl-version: ${{ matrix.perl }}
-    - name: Perl version
-      run: perl -V
-    #- name: Install dependencies
-     # run: cpanm --verbose --installdeps --notest .
-    - name: Build
-      run: pwd
-      #run: perl Makefile.PL && make
-      env:
-        BUILD_ZLIB: ${{matrix.build-zlib}}      
-    #- name: Test
-    #  run: make test
+    

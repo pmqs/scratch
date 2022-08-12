@@ -16,6 +16,4 @@ jobs:
     name: Perl 
     steps:
     - name: env
-      run: gunzip -h
-      
-    
+      run: gunzip -h   

@@ -15,7 +15,10 @@ jobs:
     - name: bunzip2
       run: bunzip2 -h   
     - name: bzip2
-      run: bzip2 -h         
+      run: bzip2 -h   
+    - name: zstd
+      run: zstd -h        
+      
   mac:
 
 #     runs-on: [ ubuntu-latest, macos-latest, windows-latest]
@@ -29,6 +32,8 @@ jobs:
       run: bunzip2 -h  
     - name: bzip2
       run: bzip2 -h          
+    - name: zstd
+      run: zstd -h    
       
   windows:
 
@@ -43,3 +48,5 @@ jobs:
       run: bunzip2 -h 
     - name: bzip2
       run: bzip2 -h          
+    - name: zstd
+      run: zstd -h     

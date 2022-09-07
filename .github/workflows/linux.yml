@@ -17,7 +17,9 @@ jobs:
     - name: bzip2
       run: bzip2 -h   
     - name: zstd
-      run: zstd -h        
+      run: zstd -h       
+    - name: diff
+      run: diff --help          
       
   mac:
 
@@ -34,6 +36,8 @@ jobs:
       run: bzip2 -h          
     - name: zstd
       run: zstd -h    
+    - name: diff
+      run: diff --help      
       
   windows:
 
@@ -50,3 +54,5 @@ jobs:
       run: bzip2 -h          
     - name: zstd
       run: zstd -h     
+    - name: diff
+      run: diff --help    

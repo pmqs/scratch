@@ -41,7 +41,7 @@ jobs:
     - name: ditto
       run: ditto -h
       
-  windows:
+#  windows:
 
 # #     runs-on: [ ubuntu-latest, macos-latest, windows-latest]
 #     runs-on: windows-latest        

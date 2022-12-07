@@ -8,7 +8,7 @@ jobs:
 # #     runs-on: [ ubuntu-latest, macos-latest, windows-latest]
 #     runs-on: ubuntu-latest         
       
-#     name: Perl 
+#     name: Perl1 
 #     steps:
 #     - name: gunzip
 #       run: gunzip -h   
@@ -26,7 +26,7 @@ jobs:
 #     runs-on: [ ubuntu-latest, macos-latest, windows-latest]
     runs-on: macos-latest         
       
-    name: Perl 
+    name: Perl2
     steps:
     - name: gunzip
       run: gunzip -h   
@@ -46,7 +46,7 @@ jobs:
 # #     runs-on: [ ubuntu-latest, macos-latest, windows-latest]
 #     runs-on: windows-latest        
       
-#     name: Perl 
+#     name: Perl3 
 #     steps:
 #     - name: gunzip
 #       run: gunzip -h   

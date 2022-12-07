@@ -21,9 +21,8 @@ jobs:
 #     - name: diff
 #       run: diff --help          
       
-  mac:
+#   mac:
 
-#     runs-on: [ ubuntu-latest, macos-latest, windows-latest]
     runs-on: macos-latest         
       
     name: Perl2

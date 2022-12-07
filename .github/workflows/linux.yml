@@ -5,21 +5,21 @@ on: [push, pull_request]
 jobs:
   build:
 
-#     runs-on: [ ubuntu-latest, macos-latest, windows-latest]
-    runs-on: ubuntu-latest         
+# #     runs-on: [ ubuntu-latest, macos-latest, windows-latest]
+#     runs-on: ubuntu-latest         
       
-    name: Perl 
-    steps:
-    - name: gunzip
-      run: gunzip -h   
-    - name: bunzip2
-      run: bunzip2 -h   
-    - name: bzip2
-      run: bzip2 -h   
-    - name: zstd
-      run: zstd -h       
-    - name: diff
-      run: diff --help          
+#     name: Perl 
+#     steps:
+#     - name: gunzip
+#       run: gunzip -h   
+#     - name: bunzip2
+#       run: bunzip2 -h   
+#     - name: bzip2
+#       run: bzip2 -h   
+#     - name: zstd
+#       run: zstd -h       
+#     - name: diff
+#       run: diff --help          
       
   mac:
 
@@ -37,22 +37,24 @@ jobs:
     - name: zstd
       run: zstd -h    
     - name: diff
-      run: diff --help      
+      run: diff --help
+    - name: ditto
+      run: ditto -h
       
   windows:
 
-#     runs-on: [ ubuntu-latest, macos-latest, windows-latest]
-    runs-on: windows-latest        
+# #     runs-on: [ ubuntu-latest, macos-latest, windows-latest]
+#     runs-on: windows-latest        
       
-    name: Perl 
-    steps:
-    - name: gunzip
-      run: gunzip -h   
-    - name: bunzip2
-      run: bunzip2 -h 
-    - name: bzip2
-      run: bzip2 -h          
-    - name: zstd
-      run: zstd -h     
-    - name: diff
-      run: diff --help    
+#     name: Perl 
+#     steps:
+#     - name: gunzip
+#       run: gunzip -h   
+#     - name: bunzip2
+#       run: bunzip2 -h 
+#     - name: bzip2
+#       run: bzip2 -h          
+#     - name: zstd
+#       run: zstd -h     
+#     - name: diff
+#       run: diff --help    

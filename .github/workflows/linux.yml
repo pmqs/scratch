@@ -58,9 +58,10 @@ jobs:
 #     - name: diff
 #       run: diff --help    
 
-    runs-on: [ ubuntu-latest, macos-latest, windows-latest]
+    # runs-on: [ ubuntu-latest, macos-latest, windows-latest]
+    runs-on: [  windows-latest]
       
-    name: 1 
+    name: 2
     steps:
     - name: home
       run: |

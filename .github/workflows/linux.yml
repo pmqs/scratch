@@ -70,6 +70,6 @@ jobs:
           print "a is [$a]\n";
           $a =~ s#^(.)# "/" . lc($1) #e;
           print "a is [$a]\n";
-          ' D:\abcd\efg
+          ' 'D:\\abcd\\efg'
       shell: bash
     

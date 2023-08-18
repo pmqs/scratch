@@ -43,11 +43,23 @@ jobs:
 #  windows:
 
 # #     runs-on: [ ubuntu-latest, macos-latest, windows-latest]
-#     runs-on: windows-latest        
+#     runs-on: windows-latest     
+
+    runs-on: [  ubuntu-latest]
       
-#     name: Perl3 
-#     steps:
-#     - name: gunzip
+    name: Perl3 
+    steps:
+    
+    - name: cancel
+      run: |
+        gh run cancel ${{ github.run_id }}
+        gh run watch ${{ github.run_id }}    
+
+    - name: step
+      run: |
+        echo abc
+        
+        
 #       run: gunzip -h   
 #     - name: bunzip2
 #       run: bunzip2 -h 
@@ -59,8 +71,9 @@ jobs:
 #       run: diff --help    
 
     # runs-on: [ ubuntu-latest, macos-latest, windows-latest]
-    runs-on: [  windows-latest]
-      
+
+
+    
     name: 2
     steps:
     - name: home

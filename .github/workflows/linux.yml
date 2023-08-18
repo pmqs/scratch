@@ -5,7 +5,6 @@ on: [ workflow_dispatch,push, pull_request]
 jobs:
   build:
 
-repo-token: ${{ secrets.GITHUB_TOKEN }}
 
 # env:
 #   GH_TOKEN: ${{ github.token }}
@@ -51,9 +50,14 @@ repo-token: ${{ secrets.GITHUB_TOKEN }}
 #     runs-on: windows-latest     
 
     runs-on: [  ubuntu-latest]
+
+
       
     name: Perl3 
+    
     steps:
+    - with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
     
     - name: cancel
       run: |

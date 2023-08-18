@@ -52,12 +52,12 @@ jobs:
     runs-on: [  ubuntu-latest]
 
 
+    env:
+      repo-token: ${{ secrets.GITHUB_TOKEN }}
       
     name: Perl3 
     
     steps:
-    - with:
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
     
     - name: cancel
       run: |

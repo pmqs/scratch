@@ -59,7 +59,20 @@ jobs:
       run: |
         echo abc
         
-        
+    # name: 77
+    # steps:
+    # - name: home
+    #   run: |
+    #     perl -e '
+    #       $a = shift;
+    #       print "a is [$a]\n";
+    #       $a =~ s#^(.)# "/" . lc($1) #e;
+    #       print "a is [$a]\n";
+    #       $a =~ s#\\#/#g;
+    #       print "a is [$a]\n";          
+    #       ' 'D:\abcd\efg'
+    #   shell: bash
+      
 #       run: gunzip -h   
 #     - name: bunzip2
 #       run: bunzip2 -h 
@@ -74,17 +87,5 @@ jobs:
 
 
     
-    name: 2
-    steps:
-    - name: home
-      run: |
-        perl -e '
-          $a = shift;
-          print "a is [$a]\n";
-          $a =~ s#^(.)# "/" . lc($1) #e;
-          print "a is [$a]\n";
-          $a =~ s#\\#/#g;
-          print "a is [$a]\n";          
-          ' 'D:\abcd\efg'
-      shell: bash
+
     

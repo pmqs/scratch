@@ -17,7 +17,7 @@ This program automates the manual process described in the referenced page.
 
 **Notes**
 
-> [!NOTE]
+> [!NOTES]
 >
 > 1. dddd
 >

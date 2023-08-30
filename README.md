@@ -15,23 +15,14 @@ For a really detailed summary of the issue, see
 
 This program automates the manual process described in the referenced page.
 
-**Notes**
-
-> [!NOTES]
->
-> 1. dddd
->
 
 > [!NOTE]
-> Highlights information that users should take into account, even when skimming.
-> 
-
-1. It may be possible to work around this issue by updating the archiving program you are using to the latest version.
-
-2. This program will modify your Zip file, so it is good practice to take a
-backup copy of the original file just in case.
-
-3. You need a 64-bit build of `perl` installed on your system to run this program.
+>
+> 1. It may be possible to work around this issue by updating the archiving program you are using to the latest version.
+>
+> 2. This program will modify your Zip file, so it is good practice to take a backup copy of the original file just in case.
+>
+> 3. You need a 64-bit build of `perl` installed on your system to run this program.
 
 ## Usage
 

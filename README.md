@@ -15,14 +15,13 @@ For a really detailed summary of the issue, see
 
 This program automates the manual process described in the referenced page.
 
-
 > [!NOTE]
 >
 > 1. It may be possible to work around this issue by updating the archiving program you are using to the latest version.
 >
 > 2. This program will modify your Zip file, so it is good practice to take a backup copy of the original file just in case.
 >
-> 3. You need a 64-bit build of `perl` installed on your system to run this program.
+> 3. You need a 64-bit build of `Perl` installed on your system to run this program.
 
 ## Usage
 
@@ -126,7 +125,7 @@ perl fix-onedrive-zip myfile.zip
 
 
 <details>
-<summary><h2>What if this program doesn't fix the issue?</h2></summary>
+<summary><h2>What if this program does not fix the issue?</h2></summary>
 
 
 The most common issue reported with this script is the following error
@@ -172,13 +171,13 @@ If you want to understand more about the internal structure of Zip files,
 the primary reference is
 [APPNOTE.TXT](https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT).
 
-The issue with the `OneNote`/`Windows` Zip files larger than 4 Gig is they
+The issue with `OneNote`/`Windows` Zip files larger than 4 Gig is they
 have an invalid `Total Number of Disks` field in the
-`ZIP64 End Central Directory Locator` record (see [APPNOTE.TXT](https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT) version 6.3.9, section 4.3.15).
-The value in this field should be `1`, but `OneDrive`/`Windows` sets it to `0`.
+`ZIP64 End Central Directory Locator` record (see [APPNOTE.TXT](https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT) version 6.3.10, section 4.3.15).
+The value in this field should be `1`, but `OneDrive`/`Windows` incorrectly sets it to `0`.
 
 This program simply changes the `Total Number of Disks` field value to `1`
-if it finds it set to `0` in the Zip file.
+if it finds it set to `0` in a Zip file.
 
 </details>
 

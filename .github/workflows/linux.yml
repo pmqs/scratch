@@ -5,7 +5,7 @@ on:
   push:
   pull_request:
   schedule:
-      - cron: '25 08 * * *'    # Run every Saturday
+      - cron: '40 08 * * *'    # Run every Saturday
       
 jobs:
   build:
@@ -17,6 +17,7 @@ jobs:
         perl:
           - '5.38'
         zlib-version:
+          - 'fred'
           - 'develop'
         zlib-native:
           - 1
@@ -36,10 +37,10 @@ jobs:
   
     steps:
   
-    - name:  alpha
+    - name:  date
       run: date
 
-    - name:  beta
+    - name:  STEP_ENABLED value
       run: echo ${{ env.STEP_ENABLED }}      
 
     - name:  gamma

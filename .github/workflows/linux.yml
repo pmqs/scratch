@@ -1,7 +1,12 @@
 name: Linux build with upstream zlib
 
-on: [ workflow_dispatch,push, pull_request]
-
+on:
+  workflow_dispatch:
+  push:
+  pull_request:
+  schedule:
+      - cron: '25 09 * * *'    # Run every Saturday
+      
 jobs:
   build:
 
@@ -27,6 +32,7 @@ jobs:
       ZLIB_NG_PRESENT:  1
       USE_ZLIB_NG:      ${{ matrix.zlib-native }}
       TRYIT:            ${{ matrix.zlib-native == 1 && 'OFF' || 'ON' }}
+      STEP_ENABLED:     ${{ github.event_name != 'schedule' || ( github.event_name == 'schedule' &&  matrix.zlib-version == 'develop' ) }}
   
     steps:
   
@@ -34,7 +40,11 @@ jobs:
       run: echo ${{ env.TRYIT }}
 
     - name:  beta
-      run: ninja      
+      run: echo ${{ env.STEP_ENABLED }}      
+
+    - name:  gamma
+      if: env.STEP_ENABLED    
+      run: echo ${{ env.STEP_ENABLED }}          
     
 
     

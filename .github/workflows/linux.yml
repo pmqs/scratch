@@ -32,6 +32,9 @@ jobs:
   
     - name:  alpha
       run: echo ${{ env.TRYIT }}
+
+    - name:  beta
+      run: ninja      
     
 
     

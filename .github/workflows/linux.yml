@@ -5,7 +5,7 @@ on:
   push:
   pull_request:
   schedule:
-      - cron: '40 08 * * *'    # Run every Saturday
+      - cron: '45 08 * * *'    # Run every Saturday
       
 jobs:
   build:
@@ -47,7 +47,9 @@ jobs:
       if: env.STEP_ENABLED    
       run: echo ${{ env.STEP_ENABLED }}          
     
-
+    - name:  delta
+      if: env.STEP_ENABLED == 'true'    
+      run: echo ${{ env.STEP_ENABLED }}  
     
 
     

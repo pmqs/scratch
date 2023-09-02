@@ -34,26 +34,27 @@ jobs:
       USE_ZLIB_NG:      ${{ matrix.zlib-native }}
       TRYIT:            ${{ matrix.zlib-native == 1 && 'OFF' || 'ON' }}
       STEP_ENABLED:     ${{ ( github.event_name != 'schedule' || ( github.event_name == 'schedule' &&  matrix.zlib-version == 'develop' ) ) && true || false }}
+      STEP_ENABLED2:     ${{ ( github.event_name != 'workflow_dispatch' || ( github.event_name == 'workflow_dispatch' &&  matrix.zlib-version == 'develop' ) ) && true || '' }}
   
     steps:
   
     - name:  date
       run: date
 
-    - name:  STEP_ENABLED value
-      run: echo ${{ env.STEP_ENABLED }}      
+    - name:  STEP_ENABLED2 value
+      run: echo ${{ env.STEP_ENABLED2 }}      
 
     - name:  gamma
-      if: env.STEP_ENABLED    
-      run: echo ${{ env.STEP_ENABLED }}          
+      if: env.STEP_ENABLED2    
+      run: echo ${{ env.STEP_ENABLED2 }}          
     
     - name:  delta
-      if: env.STEP_ENABLED == 'true'    
-      run: echo ${{ env.STEP_ENABLED }}  
+      if: env.STEP_ENABLED2 == 'true'    
+      run: echo ${{ env.STEP_ENABLED2 }}  
 
     - name:  bravo
-      if: env.STEP_ENABLED == true
-      run: echo ${{ env.STEP_ENABLED }} 
+      if: env.STEP_ENABLED2 == true
+      run: echo ${{ env.STEP_ENABLED2 }} 
     
 
     

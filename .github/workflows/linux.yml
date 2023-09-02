@@ -26,7 +26,7 @@ jobs:
       BUILD_ZLIB:       0
       ZLIB_NG_PRESENT:  1
       USE_ZLIB_NG:      ${{ matrix.zlib-native }}
-      TRYIT:            ${{ matrix.zlib-native == 1 ?? 'OFF' || 'ON' }}
+      TRYIT:            ${{ matrix.zlib-native == 1 && 'OFF' || 'ON' }}
   
     steps:
   

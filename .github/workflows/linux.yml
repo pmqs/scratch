@@ -5,105 +5,34 @@ on: [ workflow_dispatch,push, pull_request]
 jobs:
   build:
 
-
-# env:
-#   GH_TOKEN: ${{ github.token }}
-    
-# #     runs-on: [ ubuntu-latest, macos-latest, windows-latest]
-#     runs-on: ubuntu-latest         
-      
-#     name: Perl1 
-#     steps:
-#     - name: gunzip
-#       run: gunzip -h   
-#     - name: bunzip2
-#       run: bunzip2 -h   
-#     - name: bzip2
-#       run: bzip2 -h   
-#     - name: zstd
-#       run: zstd -h       
-#     - name: diff
-#       run: diff --help          
-      
-#   mac:
-
-    # runs-on: macos-latest         
-      
-    # name: Perl2
-    # steps:
-    # - name: gunzip
-    #   run: gunzip -h   
-    # - name: bunzip2
-    #   run: bunzip2 -h  
-    # - name: bzip2
-    #   run: bzip2 -h          
-    # - name: zstd
-    #   run: zstd -h    
-    # - name: diff
-    #   run: diff --help
-    # - name: ditto
-    #   run: ditto -h
-      
-#  windows:
-
-# #     runs-on: [ ubuntu-latest, macos-latest, windows-latest]
-#     runs-on: windows-latest     
-
-    runs-on: [  ubuntu-latest]
-
-
-
-      
-    name: Perl3 
-    
+    runs-on: ubuntu-latest
+  
+    strategy:
+      matrix:
+        perl:
+          - '5.38'
+        zlib-version:
+          - 'develop'
+        zlib-native:
+          - 1
+          - 0
+  
+    env:
+      zlib-source:      ${{ github.workspace }}/upstream-zlib-source
+      zlib-install:     ${{ github.workspace }}/upstream-zlib-install
+      ZLIB_LIB:         ${{ github.workspace }}/upstream-zlib-install/lib
+      ZLIB_INCLUDE:     ${{ github.workspace }}/upstream-zlib-install/include
+      ZLIB_VERSION:     ${{ matrix.zlib-version }}
+      BUILD_ZLIB:       0
+      ZLIB_NG_PRESENT:  1
+      USE_ZLIB_NG:      ${{ matrix.zlib-native }}
+      TRYIT:            ${{ matrix.zlib-native == 1 ?? 'OFF' || 'ON' }}
+  
     steps:
+  
+    - name:  alpha
+      run: echo ${{ env.TRYIT }}
     
-    - uses: actions/checkout@v3
-
-    - name: pwd
-      run: |
-        pwd
-        
-    - name: cancel
-      run: |
-        gh run cancel ${{ github.run_id }}
-        gh run watch ${{ github.run_id }}          
-      env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}        
-        # GH_TOKEN: ${{ github.token }}        
-      # env:
-      #   repo-token: ${{ secrets.GITHUB_TOKEN }}
-      
-    - name: step
-      run: |
-        echo abc
-        
-    # name: 77
-    # steps:
-    # - name: home
-    #   run: |
-    #     perl -e '
-    #       $a = shift;
-    #       print "a is [$a]\n";
-    #       $a =~ s#^(.)# "/" . lc($1) #e;
-    #       print "a is [$a]\n";
-    #       $a =~ s#\\#/#g;
-    #       print "a is [$a]\n";          
-    #       ' 'D:\abcd\efg'
-    #   shell: bash
-      
-#       run: gunzip -h   
-#     - name: bunzip2
-#       run: bunzip2 -h 
-#     - name: bzip2
-#       run: bzip2 -h          
-#     - name: zstd
-#       run: zstd -h     
-#     - name: diff
-#       run: diff --help    
-
-    # runs-on: [ ubuntu-latest, macos-latest, windows-latest]
-
 
     
 

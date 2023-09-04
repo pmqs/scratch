@@ -1,4 +1,4 @@
-# Compress-Raw-Zlib
+This is README
 
 This module provides a Perl interface to the [zlib](http://www.zlib.net/) or [zlib-ng](https://github.com/zlib-ng/zlib-ng) compression library.
 

@@ -2,7 +2,7 @@
 
 This module provides a Perl interface to the [zlib](http://www.zlib.net/) or [zlib-ng](https://github.com/zlib-ng/zlib-ng) compression library.
 
-For details of [README](README)
+For details of [README](../README)
 
 ##  Build Status
 [![Linux](https://github.com/pmqs/Compress-Raw-Zlib/actions/workflows/linux.yml/badge.svg)](https://github.com/pmqs/Compress-Raw-Zlib/actions/workflows/linux.yml)

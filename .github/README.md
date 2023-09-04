@@ -1,8 +1,10 @@
-# Compress-Raw-Zlib
+# Compress-Raw-Zlib 
 
-This module provides a Perl interface to the [zlib](http://www.zlib.net/) or [zlib-ng](https://github.com/zlib-ng/zlib-ng) compression library.
+This module provides a low level Perl interface to the [zlib](http://www.zlib.net/) or [zlib-ng](https://github.com/zlib-ng/zlib-ng) compression libraries.
 
-For details of [README](../README)
+For details of building and installing this module see the file [README](../README)
+
+Also [Compress::Raw::Zlib](https://metacpan.org/pod/Compress::Raw::Zlib)
 
 ##  Build Status
 [![Linux](https://github.com/pmqs/Compress-Raw-Zlib/actions/workflows/linux.yml/badge.svg)](https://github.com/pmqs/Compress-Raw-Zlib/actions/workflows/linux.yml)

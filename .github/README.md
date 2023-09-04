@@ -14,7 +14,7 @@
 [![MacOS + upstream zlib](https://github.com/pmqs/Compress-Raw-Zlib/actions/workflows/macos-upstream-zlib.yml/badge.svg)](https://github.com/pmqs/Compress-Raw-Zlib/actions/workflows/macos-upstream-zlib.yml)
 [![MacOS + upstream zlib-ng](https://github.com/pmqs/Compress-Raw-Zlib/actions/workflows/macos-upstream-zlib-ng.yml/badge.svg)](https://github.com/pmqs/Compress-Raw-Zlib/actions/workflows/macos-upstream-zlib-ng.yml)
 
-This module provides a low level Perl interface to the [zlib](http://www.zlib.net/) or [zlib-ng](https://github.com/zlib-ng/zlib-ng) compression libraries.
+This module provides a low-level Perl interface to the [zlib](http://www.zlib.net/) or [zlib-ng](https://github.com/zlib-ng/zlib-ng) compression libraries.
 
 For details of building and installing this module see the file [README](../README)
 

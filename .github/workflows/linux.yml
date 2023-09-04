@@ -2,10 +2,10 @@ name: Linux build with upstream zlib
 
 on:
   workflow_dispatch:
-  push:
-  pull_request:
-  schedule:
-      - cron: '25 09 * * *'    # Run every Saturday
+  # push:
+  # pull_request:
+  # schedule:
+  #     - cron: '25 09 * * *'    # Run every Saturday
       
 jobs:
   build:

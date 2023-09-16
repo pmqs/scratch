@@ -1,0 +1,39 @@
+name: Linux build with upstream zlib
+
+on:
+  workflow_dispatch:
+  # push:
+  # pull_request:
+  # schedule:
+  #     - cron: '25 09 * * *'    # Run every Saturday
+      
+jobs:
+  build:
+
+    runs-on: windows-latest
+  
+    # strategy:
+    #   matrix:
+    #     os: [ubuntu-latest, windows-latest, macos-latest]
+    #     # perl:
+    #     #   - '5.38'
+    #     # zlib-version:
+    #     #   - 'fred'
+    #     #   - 'develop'
+    #     # zlib-native:
+    #     #   - 1
+    #       # - 0
+  
+    env:
+      zlib-source:      ${{ github.workspace }}/upstream-zlib-source
+
+    steps:
+  
+    - name:  zip -v
+      run: zip -v
+
+    - name:  unzip -v
+      run: unzip -v
+    
+
+    

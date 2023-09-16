@@ -28,7 +28,10 @@ jobs:
       zlib-source:      ${{ github.workspace }}/upstream-zlib-source
 
     steps:
-  
+    
+    - name:  7z
+      run: 7z
+      
     - name:  zip -v
       run: zip -v
 

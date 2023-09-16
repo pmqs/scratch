@@ -30,10 +30,10 @@ jobs:
     steps:
   
     - name:  zip -v
-      run: zip -v
+      run: zip.exe -v
 
     - name:  unzip -v
-      run: unzip -v
+      run: unzip.exe -v
     
 
     

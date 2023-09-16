@@ -10,18 +10,19 @@ on:
 jobs:
   build:
 
-    runs-on: [ubuntu-latest, windoes-latest, macos-latest]
+    # runs-on: [ubuntu-latest, windoes-latest, macos-latest]
   
     strategy:
       matrix:
-        perl:
-          - '5.38'
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        # perl:
+        #   - '5.38'
         # zlib-version:
         #   - 'fred'
         #   - 'develop'
         # zlib-native:
         #   - 1
-          - 0
+          # - 0
   
     env:
       zlib-source:      ${{ github.workspace }}/upstream-zlib-source

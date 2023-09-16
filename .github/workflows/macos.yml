@@ -40,7 +40,7 @@ jobs:
       run: zip -v
 
     - name:  unzip -v
-      run: unzip -v
+      run: /usr/local/opt/unzip/bin/unzip -v
     
 
     

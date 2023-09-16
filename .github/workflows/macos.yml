@@ -28,7 +28,9 @@ jobs:
       zlib-source:      ${{ github.workspace }}/upstream-zlib-source
 
     steps:
-    
+    - name: install unzip
+      run: brew install unzip
+      
     - name:  7z
       run: 7z
       

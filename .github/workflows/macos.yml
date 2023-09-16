@@ -33,7 +33,7 @@ jobs:
         raku-version: latest
         
     - name:  install File::Temp
-      run: zef install File::Temp
+      run: zef install File::Temp Inline::Perl5
               
     - name:  raku
       run: raku -e 'use File::Temp; my ($filename,$filehandle) = tempfile; say $filename'

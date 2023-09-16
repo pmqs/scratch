@@ -35,6 +35,11 @@ jobs:
         
     - name:  raku
       run: raku -e 'use File::Temp; my ($filename,$filehandle) = tempfile; say $filename'
+
+              
+    - name:  install File::Temp
+      run: zef install File::Temp
+
       
     - name:  7z
       run: 7z

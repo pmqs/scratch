@@ -32,6 +32,9 @@ jobs:
       with:
         raku-version: latest
         
+    - name:  install File::Temp
+      run: zef install File::Temp
+              
     - name:  raku
       run: raku -e 'use File::Temp; my ($filename,$filehandle) = tempfile; say $filename'
       

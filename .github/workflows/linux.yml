@@ -31,7 +31,7 @@ jobs:
 
     - uses: Raku/setup-raku@v1
       with:
-        raku-version: ${{ matrix.raku-version }}
+        raku-version: latest
         
     - name:  raku
       run: raku -e 'use File::Temp; my ($filename,$filehandle) = tempfile; say $filename'

@@ -10,51 +10,29 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: [ubuntu-latest, windoes-latest, macos-latest]
   
     strategy:
       matrix:
         perl:
           - '5.38'
-        zlib-version:
-          - 'fred'
-          - 'develop'
-        zlib-native:
-          - 1
+        # zlib-version:
+        #   - 'fred'
+        #   - 'develop'
+        # zlib-native:
+        #   - 1
           - 0
   
     env:
       zlib-source:      ${{ github.workspace }}/upstream-zlib-source
-      zlib-install:     ${{ github.workspace }}/upstream-zlib-install
-      ZLIB_LIB:         ${{ github.workspace }}/upstream-zlib-install/lib
-      ZLIB_INCLUDE:     ${{ github.workspace }}/upstream-zlib-install/include
-      ZLIB_VERSION:     ${{ matrix.zlib-version }}
-      BUILD_ZLIB:       0
-      ZLIB_NG_PRESENT:  1
-      USE_ZLIB_NG:      ${{ matrix.zlib-native }}
-      TRYIT:            ${{ matrix.zlib-native == 1 && 'OFF' || 'ON' }}
-      STEP_ENABLED:     ${{ ( github.event_name != 'schedule' || ( github.event_name == 'schedule' &&  matrix.zlib-version == 'develop' ) ) && true || false }}
-      STEP_ENABLED2:     ${{ ( github.event_name != 'workflow_dispatch' || ( github.event_name == 'workflow_dispatch' &&  matrix.zlib-version == 'develop' ) ) && true || '' }}
-  
+
     steps:
   
-    - name:  date
-      run: date
+    - name:  zip -v
+      run: zip -v
 
-    - name:  STEP_ENABLED2 value
-      run: echo ${{ env.STEP_ENABLED2 }}      
-
-    - name:  gamma
-      if: env.STEP_ENABLED2    
-      run: echo ${{ env.STEP_ENABLED2 }}          
-    
-    - name:  delta
-      if: env.STEP_ENABLED2 == 'true'    
-      run: echo ${{ env.STEP_ENABLED2 }}  
-
-    - name:  bravo
-      if: env.STEP_ENABLED2 == true
-      run: echo ${{ env.STEP_ENABLED2 }} 
+    - name:  unzip -v
+      run: unzip -v
     
 
     

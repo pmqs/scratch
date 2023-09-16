@@ -31,9 +31,11 @@ jobs:
   
     - name:  zip -v
       run: zip.exe -v
+      shell: bash
 
     - name:  unzip -v
       run: unzip.exe -v
+      shell: bash
     
 
     

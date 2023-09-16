@@ -30,11 +30,11 @@ jobs:
     steps:
   
     - name:  zip -v
-      run: zip.exe -v
+      run: zip -v
       shell: bash
 
     - name:  unzip -v
-      run: unzip.exe -v
+      run: unzip -v
       shell: bash
     
 

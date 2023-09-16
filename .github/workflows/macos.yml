@@ -28,6 +28,13 @@ jobs:
       zlib-source:      ${{ github.workspace }}/upstream-zlib-source
 
     steps:
+    - uses: Raku/setup-raku@v1
+      with:
+        raku-version: latest
+        
+    - name:  raku
+      run: raku -e 'use File::Temp; my ($filename,$filehandle) = tempfile; say $filename'
+      
     - name: install unzip
       run: |
         # port install unzip 

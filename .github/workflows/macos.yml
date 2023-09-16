@@ -1,4 +1,4 @@
-name: Linux build with upstream zlib
+name: MacOS build 
 
 on:
   workflow_dispatch:

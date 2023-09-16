@@ -28,6 +28,14 @@ jobs:
       zlib-source:      ${{ github.workspace }}/upstream-zlib-source
 
     steps:
+
+    - uses: Raku/setup-raku@v1
+      with:
+        raku-version: ${{ matrix.raku-version }}
+        
+    - name:  raku
+      run: raku -e 'use File::Temp; my ($filename,$filehandle) = tempfile; say $filename'
+      
     - name:  7z
       run: 7z
       

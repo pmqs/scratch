@@ -30,8 +30,10 @@ jobs:
     steps:
     - name: install unzip
       run: |
-        brew install unzip
-        echo 'export PATH="/usr/local/opt/unzip/bin:$PATH"' >> /Users/runner/.bash_profile
+        port install unzip 
+        port contents unzip
+        # brew install unzip
+        # echo 'export PATH="/usr/local/opt/unzip/bin:$PATH"' >> /Users/runner/.bash_profile
       
     - name:  7z
       run: 7z
@@ -40,7 +42,7 @@ jobs:
       run: zip -v
 
     - name:  unzip -v
-      run: /usr/local/opt/unzip/bin/unzip -v
+      run: unzip -v
     
 
     

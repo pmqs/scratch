@@ -46,6 +46,8 @@ jobs:
 
     - name:  unzip -v
       run: unzip -v
-    
+
+    - name:  /usr/local/Cellar/unzip/6.0_8/bin/unzip -v
+      run: /usr/local/Cellar/unzip/6.0_8/bin/unzip -v
 
     

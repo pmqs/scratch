@@ -1,52 +1,105 @@
-name: Linux build
+name: Linux
 
-on:
-  workflow_dispatch:
-  # push:
-  # pull_request:
-  # schedule:
-  #     - cron: '25 09 * * *'    # Run every Saturday
-      
+on: [push, pull_request, workflow_dispatch]
 jobs:
-  build:
+  configure:
+    name: ${{ matrix.os }} + ${{ matrix.compiler }} p
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
 
-    runs-on: ubuntu-latest
-  
-    # strategy:
-    #   matrix:
-    #     os: [ubuntu-latest, windows-latest, macos-latest]
-    #     # perl:
-    #     #   - '5.38'
-    #     # zlib-version:
-    #     #   - 'fred'
-    #     #   - 'develop'
-    #     # zlib-native:
-    #     #   - 1
-    #       # - 0
-  
-    env:
-      zlib-source:      ${{ github.workspace }}/upstream-zlib-source
-
+          compiler:
+            - gcc
+            - clang
+    
     steps:
 
-    - uses: Raku/setup-raku@v1
+    - name: Checkout repository
+      uses: actions/checkout@v4
       with:
-        raku-version: latest
-        
-    - name:  install File::Temp
-      run: zef install File::Temp Inline::Perl5
-      
-    - name:  raku
-      run: raku -e 'use File::Temp; my ($filename,$filehandle) = tempfile; say $filename'
-      
-    - name:  7z
-      run: 7z
-      
-    - name:  zip -v
-      run: zip -v
+        repository: info-zip/zip-demo
+        show-progress: 'false'
+        ref: build
 
-    - name:  unzip -v
-      run: unzip -v
-    
+    - name: Install packages (Ubuntu)
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y ${{ matrix.compiler }}
 
-    
+    - name: Display ${{ matrix.compiler }} version
+      run: ${{ matrix.compiler }} -v
+
+    - name: configure (unix/Makefile)
+      run: |
+        make -f unix/Makefile flags CC=${{ matrix.compiler }}
+
+    # - name: change the flags file protos=${{ matrix.protos }} lzma=${{ matrix.lzma }}
+    #   run: |
+    #       if [ "${{ matrix.protos }}" -eq "1" ]
+    #       then
+    #         sed -i.bak -e 's/-DNO_PROTO//' flags
+    #       else
+    #         sed -i.bak -e 's/CF="/CF=" -DNO_PROTO /' flags
+    #       fi
+    #       if [ "${{ matrix.lzma }}" -eq "1" ]
+    #       then
+    #         sed -i.bak -e 's/CF="/CF=" -DLZMA_SUPPORT /' flags
+    #       else
+    #         sed -i.bak -e 's/-DLZMA_SUPPORT//' flags
+    #       fi
+    #       if [ "${{ matrix.ppmd }}" -eq "1" ]
+    #       then
+    #         sed -i.bak -e 's/CF="/CF=" -DPPMD_SUPPORT /' flags
+    #       else
+    #         sed -i.bak -e 's/-DPPMD_SUPPORT//' flags
+    #       fi
+    #       sed -i.bak -e 's/CF="/CF=" -Werror /' flags
+
+    #       cat flags
+
+    - name: change the flags file include -Werror
+      run: |
+        sed -i.bak -e 's/CF="/CF=" -Werror /' flags
+        cat flags
+
+    - name: build (unix/Makefile)
+      run: |
+            make -f unix/Makefile generic CC=${{ matrix.compiler }}
+
+    - name: Run zip --help
+      run: ./zip --help
+
+    - name: Run zip -v
+      run: ./zip -v
+
+    - name: Run zipcloak --help
+      run: ./zipcloak --help
+
+    - name: Run zipcloak -v
+      run: ./zipcloak -v
+
+    - name: Run zipnote --help
+      run: ./zipnote --help
+
+    - name: Run zipnote -v
+      run: ./zipnote -v
+
+    - name: Run zipsplit --help
+      run: ./zipsplit --help
+
+    - name: Run zipsplit -v
+      run: ./zipsplit -v
+
+
+    # - name: Upload build errors
+    #   uses: actions/upload-artifact@v3
+    #   if: failure()
+    #   with:
+    #     name: ${{ matrix.name }} (configure)
+    #     path: |
+    #       **/Makefile
+    #       ${{ matrix.build-dir || '.' }}/configure.log
+    #     retention-days: 30

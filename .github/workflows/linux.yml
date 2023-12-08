@@ -4,16 +4,13 @@ on: [push, pull_request, workflow_dispatch]
 jobs:
   configure:
     name: ${{ matrix.os }} + ${{ matrix.compiler }} p
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        os:
-          - ubuntu-latest
-
-          compiler:
-            - gcc
-            - clang
+        compiler:
+          - gcc
+          - clang
     
     steps:
 

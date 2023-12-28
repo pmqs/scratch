@@ -1,102 +1,66 @@
-name: Linux
+name: Linux build
 
-on: [push, pull_request, workflow_dispatch]
+on:
+  workflow_dispatch:
+  # push:
+  # pull_request:
+
 jobs:
-  configure:
-    name: ${{ matrix.os }} + ${{ matrix.compiler }} p
+  build:
+
     runs-on: ubuntu-latest
+
     strategy:
-      fail-fast: false
       matrix:
-        compiler:
-          - gcc
-          - clang
-    
+        perl:
+          # - '5.38'
+          # - '5.36'
+          # - '5.34'
+          # - '5.32'
+          # - '5.30'
+          # - '5.28'
+          # - '5.26'
+          # - '5.24'
+          # - '5.22'
+          # - '5.20'
+          # - '5.18'
+          # - '5.16'
+          # - '5.14'
+          # - '5.12'
+          - '5.10'
+
+    name: Perl ${{ matrix.perl }}
     steps:
 
-    - name: Checkout repository
-      uses: actions/checkout@v4
+    - uses: actions/checkout@v3
+
+    - name: Setup perl
+      uses: shogo82148/actions-setup-perl@v1
       with:
-        repository: info-zip/zip-demo
-        show-progress: 'false'
-        ref: build
+        perl-version: ${{ matrix.perl }}
 
-    - name: Install packages (Ubuntu)
+    - name: Force regeneration of README.md
       run: |
-        sudo apt-get update
-        sudo apt-get install -y ${{ matrix.compiler }}
+        sleep 2
+        touch .github/badges
 
-    - name: Display ${{ matrix.compiler }} version
-      run: ${{ matrix.compiler }} -v
+    - name: Perl version
+      run: perl -V
 
-    - name: configure (unix/Makefile)
-      run: |
-        make -f unix/Makefile flags CC=${{ matrix.compiler }}
+    - name: Install dependencies
+      run: cpanm --quiet --installdeps --notest .
 
-    # - name: change the flags file protos=${{ matrix.protos }} lzma=${{ matrix.lzma }}
-    #   run: |
-    #       if [ "${{ matrix.protos }}" -eq "1" ]
-    #       then
-    #         sed -i.bak -e 's/-DNO_PROTO//' flags
-    #       else
-    #         sed -i.bak -e 's/CF="/CF=" -DNO_PROTO /' flags
-    #       fi
-    #       if [ "${{ matrix.lzma }}" -eq "1" ]
-    #       then
-    #         sed -i.bak -e 's/CF="/CF=" -DLZMA_SUPPORT /' flags
-    #       else
-    #         sed -i.bak -e 's/-DLZMA_SUPPORT//' flags
-    #       fi
-    #       if [ "${{ matrix.ppmd }}" -eq "1" ]
-    #       then
-    #         sed -i.bak -e 's/CF="/CF=" -DPPMD_SUPPORT /' flags
-    #       else
-    #         sed -i.bak -e 's/-DPPMD_SUPPORT//' flags
-    #       fi
-    #       sed -i.bak -e 's/CF="/CF=" -Werror /' flags
+    - name: Help output
+      run: perl bin/zipdetails --help
 
-    #       cat flags
+    - name: Configure
+      run: perl Makefile.PL
 
-    - name: change the flags file include -Werror
-      run: |
-        sed -i.bak -e 's/CF="/CF=" -Werror /' flags
-        cat flags
+    - name: cat Makefile
+      run: cat Makefile
 
-    - name: build (unix/Makefile)
-      run: |
-            make -f unix/Makefile generic CC=${{ matrix.compiler }}
+    - name: Build
+      run: make
 
-    - name: Run zip --help
-      run: ./zip --help
-
-    - name: Run zip -v
-      run: ./zip -v
-
-    - name: Run zipcloak --help
-      run: ./zipcloak --help
-
-    - name: Run zipcloak -v
-      run: ./zipcloak -v
-
-    - name: Run zipnote --help
-      run: ./zipnote --help
-
-    - name: Run zipnote -v
-      run: ./zipnote -v
-
-    - name: Run zipsplit --help
-      run: ./zipsplit --help
-
-    - name: Run zipsplit -v
-      run: ./zipsplit -v
-
-
-    # - name: Upload build errors
-    #   uses: actions/upload-artifact@v3
-    #   if: failure()
-    #   with:
-    #     name: ${{ matrix.name }} (configure)
-    #     path: |
-    #       **/Makefile
-    #       ${{ matrix.build-dir || '.' }}/configure.log
-    #     retention-days: 30
+    - name: Test
+      run: make test TEST_VERBOSE=1

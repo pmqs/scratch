@@ -1,63 +1,66 @@
-name: MacOS build 
+name: Macos build
 
 on:
   workflow_dispatch:
   # push:
   # pull_request:
-  # schedule:
-  #     - cron: '25 09 * * *'    # Run every Saturday
-      
+
 jobs:
   build:
 
     runs-on: macos-latest
-  
-    # strategy:
-    #   matrix:
-    #     os: [ubuntu-latest, windows-latest, macos-latest]
-    #     # perl:
-    #     #   - '5.38'
-    #     # zlib-version:
-    #     #   - 'fred'
-    #     #   - 'develop'
-    #     # zlib-native:
-    #     #   - 1
-    #       # - 0
-  
-    env:
-      zlib-source:      ${{ github.workspace }}/upstream-zlib-source
 
+    strategy:
+      matrix:
+        perl:
+          - '5.38'
+          - '5.36'
+          - '5.34'
+          - '5.32'
+          - '5.30'
+          - '5.28'
+          - '5.26'
+          - '5.24'
+          - '5.22'
+          - '5.20'
+          - '5.18'
+          - '5.16'
+          - '5.14'
+          - '5.12'
+          - '5.10'
+
+    name: Perl ${{ matrix.perl }}
     steps:
-    - uses: Raku/setup-raku@v1
+
+    - uses: actions/checkout@v3
+
+    - name: Setup perl
+      uses: shogo82148/actions-setup-perl@v1
       with:
-        raku-version: latest
-        
-    - name:  install File::Temp
-      run: zef install File::Temp Inline::Perl5
-              
-    - name:  raku
-      run: raku -e 'use File::Temp; my ($filename,$filehandle) = tempfile; say $filename'
-      
-    - name: install unzip
+        perl-version: ${{ matrix.perl }}
+
+    - name: Force regeneration of README.md
       run: |
-        # port install unzip 
-        # port contents unzip
-        brew install --verbose unzip
-        # echo 'export PATH="/usr/local/opt/unzip/bin:$PATH"' >> /Users/runner/.bash_profile
+        sleep 2
+        touch .github/badges
 
-    - name:  find
-      run: find /usr/local/Cellar/unzip
-      
-    - name:  7z
-      run: 7z
-      
-    - name:  zip -v
-      run: zip -v
+    - name: Perl version
+      run: perl -V
 
-    - name:  unzip -v
-      run: unzip -v
+    - name: Install dependencies
+      run: cpanm --quiet --installdeps --notest .
 
-    - name:  /usr/local/Cellar/unzip/6.0_8/bin/unzip -v
-      run: /usr/local/Cellar/unzip/6.0_8/bin/unzip -v
+    - name: Help output
+      run: perl bin/zipdetails --help
 
-    
+    - name: Configure
+      run: perl Makefile.PL
+
+    - name: cat Makefile
+      run: cat Makefile
+
+    - name: Build
+      run: make
+
+    - name: Test
+      run: make test TEST_VERBOSE=1

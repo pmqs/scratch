@@ -1,56 +1,69 @@
-name: Windows build 
+name: Windows build
 
 on:
   workflow_dispatch:
   # push:
   # pull_request:
-  # schedule:
-  #     - cron: '25 09 * * *'    # Run every Saturday
-      
+
 jobs:
   build:
 
     runs-on: windows-latest
-  
-    # strategy:
-    #   matrix:
-    #     os: [ubuntu-latest, windows-latest, macos-latest]
-    #     # perl:
-    #     #   - '5.38'
-    #     # zlib-version:
-    #     #   - 'fred'
-    #     #   - 'develop'
-    #     # zlib-native:
-    #     #   - 1
-    #       # - 0
-  
-    env:
-      zlib-source:      ${{ github.workspace }}/upstream-zlib-source
 
+    strategy:
+      matrix:
+        perl:
+          # - '5.38'
+          # - '5.36'
+          # - '5.34'
+          # - '5.32'
+          # - '5.30'
+          # - '5.28'
+          # - '5.26'
+          # - '5.24'
+          # - '5.22'
+          # - '5.20'
+          # - '5.18'
+          # - '5.16'
+          # - '5.14'
+          # - '5.12'
+          - '5.10'
+
+    name: Perl ${{ matrix.perl }}
     steps:
-    
-    - uses: Raku/setup-raku@v1
+
+    - uses: actions/checkout@v3
+
+    - name: Setup perl
+      uses: shogo82148/actions-setup-perl@v1
       with:
-        raku-version: latest
+        perl-version: ${{ matrix.perl }}
 
-    - name:  install File::Temp
-      run: zef install -/test File::Temp Inline::Perl5
-      
-    - name:  raku
-      run: raku -e 'use File::Temp; my ($filename,$filehandle) = tempfile; say $filename'
+    - name: Force regeneration of README.md
+      run: |
+        sleep 2
+        touch .github/badges
 
-                    
-    - name:  7z
-      run: 7z
-      shell: bash
-      
-    - name:  zip -v
-      run: zip -v
-      shell: bash
+    - name: Perl version
+      run: perl -V
 
-    - name:  unzip -v
-      run: unzip -v
-      shell: bash
-    
+    - name: Install dependencies
+      run: cpanm --installdeps --notest .
 
-    
+    - name: chcp output
+      run: chcp
+
+    - name: Help output
+      run: perl bin/zipdetails --help
+
+    - name: Build
+      run: perl Makefile.PL
+
+    - name: cat Makefile
+      run: cat Makefile
+
+    - name: Build
+      run: make
+
+    - name: Test
+      run: make test ZIPDETAILS_TEST_MATCH=0002-7z/windows ZIPDETAILS_TEST_DIFF=1

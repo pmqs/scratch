@@ -4345,9 +4345,13 @@ sub getT
 {
     my $time = shift ;
 
+use Devel::Peek;
+
 $time = -11644473600;
+$! = 0;
 my $got = scalar gmtime(int(0 + $time + 0));
 say "### [$!][$time][$got]";
+
     if ($opt_utc)
      { return scalar gmtime($time + 0) }
     else

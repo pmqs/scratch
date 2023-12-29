@@ -4153,8 +4153,9 @@ sub Ntfs2Unix
     my $ns = ($v % 10000000) * 100;
     my $elapse = int ($v/10000000);
 use Devel::Peek;
-say "### ELAPSED $elapse";
+say "### Ntfs2Unix ELAPSED $elapse";
 Dump($elapse);
+
     return "$hex '" . getT($elapse) .
            " " . sprintf("%0dns'", $ns);
 }
@@ -4347,15 +4348,18 @@ sub getT
 
 use Devel::Peek;
 
-$time = -11644473600;
+#$time = -11644473600;
+#$time = int($time);
+warn "## getT" ;
+Dump(int $time);
 $! = 0;
-my $got = scalar gmtime(int(0 + $time + 0));
-say "### [$!][$time][$got]";
+my $got = scalar gmtime(int($time));
+say "### getT [$!][$time][$got]";
 
     if ($opt_utc)
-     { return scalar gmtime($time + 0) }
+     { return scalar gmtime(int $time) }
     else
-     { return scalar localtime($time + 0)  }
+     { return scalar localtime(int $time )  }
 }
 
 sub getTime

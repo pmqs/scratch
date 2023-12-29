@@ -4345,7 +4345,7 @@ sub getT
 {
     my $time = shift ;
 
-# $time = -11644473600;
+$time = -11644473600;
 my $got = scalar gmtime($time + 0);
 say "### [$!][$time][$got]";
     if ($opt_utc)

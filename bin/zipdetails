@@ -4345,12 +4345,12 @@ sub getT
 {
     my $time = shift ;
 
-my $got = scalar gmtime($time);
+my $got = scalar gmtime($time + 0);
 say "### [$time][$got]";
     if ($opt_utc)
-     { return scalar gmtime($time) }
+     { return scalar gmtime($time + 0) }
     else
-     { return scalar localtime($time) }
+     { return scalar localtime($time + 0)  }
 }
 
 sub getTime

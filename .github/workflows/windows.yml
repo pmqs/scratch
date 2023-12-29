@@ -49,9 +49,11 @@ jobs:
 
     - name: Print -1
       run: perl -e 'print "[" . scalar(gmtime(-1)) . "]\n"; print  "\n"'
+      shell: bash
 
     - name: Epoch
       run: perl -e 'print "[" .scalar(gmtime(-11644473600)) . "]\n" ; print  "\n"'
+      shell: bash
       
     # - name: Install dependencies
     #   run: cpanm --installdeps --notest .

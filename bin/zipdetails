@@ -4345,6 +4345,8 @@ sub getT
 {
     my $time = shift ;
 
+my $got = scalar gmtime($time);
+say "### [$time][$got]";
     if ($opt_utc)
      { return scalar gmtime($time) }
     else

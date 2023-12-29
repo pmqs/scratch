@@ -4154,7 +4154,7 @@ sub Ntfs2Unix
     my $elapse = int ($v/10000000);
 use Devel::Peek;
 say "### ELAPSED $elapse";
-Dump($elapsed);
+Dump($elapse);
     return "$hex '" . getT($elapse) .
            " " . sprintf("%0dns'", $ns);
 }

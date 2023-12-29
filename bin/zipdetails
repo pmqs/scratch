@@ -4152,6 +4152,7 @@ sub Ntfs2Unix
     $v -= 0x19DB1DED53E8000 ;
     my $ns = ($v % 10000000) * 100;
     my $elapse = int ($v/10000000);
+say "### ELAPSED $elapse";
     return "$hex '" . getT($elapse) .
            " " . sprintf("%0dns'", $ns);
 }

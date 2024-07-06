@@ -38,10 +38,10 @@ jobs:
 
     - name: iconv
       run: |
-        iconv -l | grep -i wchar
+        iconv -l
 
     - name: iconv
-      run: iconv -l 
+      run: iconv -l  | grep -i wchar
 
     # - name: Install dependencies
     #   run: cpanm --quiet --installdeps --notest .

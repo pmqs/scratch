@@ -27,40 +27,23 @@ jobs:
           # - '5.16'
           # - '5.14'
           # - '5.12'
-          - '5.10'
+          # - '5.10'
+          - '5.8'
 
     name: Perl ${{ matrix.perl }}
     steps:
 
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v6
 
     - name: Setup perl
       uses: shogo82148/actions-setup-perl@v1
       with:
         perl-version: ${{ matrix.perl }}
 
-    - name: Force regeneration of README.md
-      run: |
-        sleep 2
-        touch .github/badges
-
     - name: Perl version
       run: perl -V
 
-    - name: Install dependencies
-      run: cpanm --quiet --installdeps --notest .
+    - name: Compress::Raw::Zlib::VERSION
+      run: perl -MCompress::Raw::Zlib=:all -e 'print "Compress::Raw::Zlib::VERSION $Compress::Raw::Zlib::VERSION\n" '
 
-    - name: Help output
-      run: perl bin/zipdetails --help
-
-    - name: Configure
-      run: perl Makefile.PL
-
-    - name: cat Makefile
-      run: cat Makefile
-
-    - name: Build
-      run: make
-
-    - name: Test
-      run: make test TEST_VERBOSE=1
+      

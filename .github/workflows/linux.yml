@@ -44,6 +44,6 @@ jobs:
       run: perl -V
 
     - name: Compress::Raw::Zlib::VERSION
-      run: perl -MCompress::Raw::Zlib=:all -e 'print "Compress::Raw::Zlib::VERSION $Compress::Raw::Zlib::VERSION\n" '
+      run: perl -MCompress::Raw::Zlib -e 'print "Compress::Raw::Zlib::VERSION $Compress::Raw::Zlib::VERSION\n" '
 
       

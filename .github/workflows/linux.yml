@@ -38,7 +38,7 @@ jobs:
       run: |
         HASH=hello
         echo "value=$HASH"  >> $GITHUB_OUTPUT
-        echo "evalue=$HASH" >> $GITHUB_ENV
+        echo "evalue=fred" >> $GITHUB_ENV
 
     - name: Cache LLVM C++ libraries (MSAN)
       id: cache-llvm
@@ -49,6 +49,7 @@ jobs:
           /home/runner/work/zlib-ng/zlib-ng/llvm-project/build/include
           ${{ steps.llvm-remote-hash.outputs.value }}/abc
           ${{ env.evalue }}/def
+          $evalue/ghi
         key: cache-llvm-${{ runner.arch }}-${{ steps.llvm-remote-hash.outputs.value }}
 
 

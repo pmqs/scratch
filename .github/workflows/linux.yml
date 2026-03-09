@@ -2,7 +2,7 @@ name: Linux build
 
 on:
   workflow_dispatch:
-  # push:
+  push:
   # pull_request:
 
 jobs:
@@ -10,40 +10,47 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        perl:
-          # - '5.38'
-          # - '5.36'
-          # - '5.34'
-          # - '5.32'
-          # - '5.30'
-          # - '5.28'
-          # - '5.26'
-          # - '5.24'
-          # - '5.22'
-          # - '5.20'
-          # - '5.18'
-          # - '5.16'
-          # - '5.14'
-          # - '5.12'
-          - '5.10'
-          # - '5.8'
+    # strategy:
+    #   matrix:
+    #     perl:
+    #       # - '5.38'
+    #       # - '5.36'
+    #       # - '5.34'
+    #       # - '5.32'
+    #       # - '5.30'
+    #       # - '5.28'
+    #       # - '5.26'
+    #       # - '5.24'
+    #       # - '5.22'
+    #       # - '5.20'
+    #       # - '5.18'
+    #       # - '5.16'
+    #       # - '5.14'
+    #       # - '5.12'
+    #       - '5.10'
+    #       # - '5.8'
 
     name: Perl ${{ matrix.perl }}
     steps:
 
-    - uses: actions/checkout@v6
+    - name: Get latest hash change for LLVM C++ libraries (MSAN)
+      id: llvm-remote-hash
+      run: |
+        HASH=hello
+        echo "value=$HASH"  >> $GITHUB_OUTPUT
+        echo "evalue=$HASH" >> $GITHUB_ENV
 
-    - name: Setup perl
-      uses: shogo82148/actions-setup-perl@v1
+    - name: Cache LLVM C++ libraries (MSAN)
+      id: cache-llvm
+      uses: actions/cache@v5
       with:
-        perl-version: ${{ matrix.perl }}
+        path: |
+          /home/runner/work/zlib-ng/zlib-ng/llvm-project/build/lib
+          /home/runner/work/zlib-ng/zlib-ng/llvm-project/build/include
+          ${{ steps.llvm-remote-hash.outputs.value }}/abc
+          ${{ env.evalue }}/def
+        key: cache-llvm-${{ runner.arch }}-${{ steps.llvm-remote-hash.outputs.value }}
 
-    - name: Perl version
-      run: perl -V
 
-    - name: Compress::Raw::Zlib::VERSION
-      run: perl -MCompress::Raw::Zlib -e 'print "Compress::Raw::Zlib::VERSION $Compress::Raw::Zlib::VERSION\n" '
 
       

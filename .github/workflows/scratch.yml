@@ -1,57 +1,33 @@
-name: scratch
+name: Linux build
 
 on:
   workflow_dispatch:
-  # push:
+  push:
   # pull_request:
+  # schedule:
+  #   - cron: '01 01 * * 6'    # Run every Saturday
 
 jobs:
-  build:
 
+
+
+  run:
     runs-on: ubuntu-latest
-    name: go
+    strategy:
+      fail-fast: false
+      matrix:
+        fruit: [apple, pear]
+        animal: [cat, dog]
+        include:
+          - color: green
+          - color: pink
+            animal: cat
+          - fruit: apple
+            shape: circle
+          - fruit: banana
+          - fruit: banana
+            animal: cat      
     steps:
 
-    # - uses: actions/checkout@v3
-
-    # - name: Setup perl
-    #   uses: shogo82148/actions-setup-perl@v1
-    #   with:
-    #     perl-version: ${{ matrix.perl }}
-
-    # - name: Force regeneration of README.md
-    #   run: |
-    #     sleep 2
-    #     touch .github/badges
-
-    # - name: Perl version
-    #   run: perl -V
-
-    # - name: Install dependencies
-    #   run: cpanm --quiet --installdeps --notest .
-
-    # - name: Help output
-    #   run: perl bin/zipdetails --help
-
-    # - name: Configure
-    #   run: perl Makefile.PL
-
-    # - name: cat Makefile
-    #   run: cat Makefile
-
-    - name: Build
-      run: |
-        mkdir build-log
-        cd build-log
-        echo abc>abc
-        exit 1
-
-    - name: Archive build log
-      if: failure()
-      uses: actions/upload-artifact@v4
-      with:
-        name: scratch-log
-        path: build-log
-
-    - name: Test
-      run: make test TEST_VERBOSE=1
+      - name: ${{ matrix.fruit }} ${{matrix.animal }} ${{ matrix.include }}
+        run: echo x 

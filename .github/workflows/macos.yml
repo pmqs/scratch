@@ -8,28 +8,22 @@ on:
 jobs:
   build:
 
-    runs-on: macos-latest
+    runs-on: ${{ matrix.os }}
 
-    # strategy:
-      # matrix:
-        # perl:
-        #   - '5.38'
-        #   - '5.36'
-        #   - '5.34'
-        #   - '5.32'
-        #   - '5.30'
-        #   - '5.28'
-        #   - '5.26'
-        #   - '5.24'
-        #   - '5.22'
-        #   - '5.20'
-        #   - '5.18'
-        #   - '5.16'
-        #   - '5.14'
-        #   - '5.12'
-        #   - '5.10'
+    strategy:
+      matrix:
+        os:
+          - 'macos-latest'
+          - macos-15-intel
+          - macos 26-intel
+          - macos-14
+          - macos-15
+          - macos-26
+          
+          
 
-    name: Perl ${{ matrix.perl }}
+
+    name: ${{ matrix.os }}
     steps:
 
     # - uses: actions/checkout@v3
@@ -40,23 +34,18 @@ jobs:
       run: |
         iconv -l
 
-    - name: iconv
-      run: iconv -l  | grep -i wchar
+    - name: clang -v
+      run: clang -v
 
-    # - name: Install dependencies
-    #   run: cpanm --quiet --installdeps --notest .
 
-    # - name: Help output
-    #   run: perl bin/zipdetails --help
+    - name: ver1
+      run: clang -std=c11 -dM -E - < /dev/null | grep ISO_10646
 
-    # - name: Configure
-    #   run: perl Makefile.PL
 
-    # - name: cat Makefile
-    #   run: cat Makefile
+    - name: ver2
+      run: clang  -dM -E - < /dev/null | grep ISO_10646
+      
 
-    # - name: Build
-    #   run: make
 
     # - name: Test
     #   run: make test TEST_VERBOSE=1

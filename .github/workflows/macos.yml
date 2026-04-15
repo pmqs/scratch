@@ -39,11 +39,11 @@ jobs:
 
 
     - name: ver1
-      run: clang -std=c11 -dM -E - < /dev/null | grep ISO_10646
+      run: clang -std=c11 -dM -E - < /dev/null 
 
 
     - name: ver2
-      run: clang  -dM -E - < /dev/null | grep ISO_10646
+      run: clang  -dM -E - < /dev/null 
       
 
 

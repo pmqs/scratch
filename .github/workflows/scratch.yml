@@ -8,26 +8,25 @@ on:
   #   - cron: '01 01 * * 6'    # Run every Saturday
 
 jobs:
-
-
-
-  run:
+  test:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        fruit: [apple, pear]
-        animal: [cat, dog]
-        include:
-          - color: green
-          - color: pink
-            animal: cat
-          - fruit: apple
-            shape: circle
-          - fruit: banana
-          - fruit: banana
-            animal: cat      
-    steps:
+    defaults:
+      run:
+        shell: cpa.sh {0}
 
-      - name: ${{ matrix.fruit }} ${{matrix.animal }} ${{ matrix.include }}
-        run: echo x 
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Start VM
+        uses: cross-platform-actions/action@v1.2.0
+        with:
+          operating_system: freebsd
+          version: '15.0'
+
+      - name: Test
+        run: |
+          uname -a
+          echo $SHELL
+          pwd
+          ls -lah
+          whoami
